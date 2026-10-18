@@ -481,6 +481,21 @@ pub fn unknown_union_member<'de, D: serde::Deserializer<'de>>(
     }
 }
 
+/// Whether `candidate` re-encodes every key of the object it was decoded from:
+/// an untagged union prefers the branch that drops nothing.
+pub fn keeps_every_key<T: serde::Serialize>(source: &serde_json::Value, candidate: &T) -> bool {
+    let Some(source) = source.as_object() else {
+        return true;
+    };
+    match serde_json::to_value(candidate) {
+        // A key sent as null is one serde skips again on the way out.
+        Ok(serde_json::Value::Object(kept)) => source
+            .iter()
+            .all(|(key, item)| item.is_null() || kept.contains_key(key)),
+        _ => true,
+    }
+}
+
 pub fn query_value<T: serde::Serialize + ?Sized>(value: &T) -> String {
     match serde_json::to_value(value) {
         Ok(serde_json::Value::String(s)) => s,
@@ -603,21 +618,3 @@ pub fn push_cookie<T: serde::Serialize + ?Sized>(
 pub fn json_parameter<T: serde::Serialize + ?Sized>(value: &T) -> String {
     serde_json::to_string(value).unwrap_or_default()
 }
-
-/// Sets a request header. A second `Cookie` joins the first, so an apiKey
-/// cookie and the operation's cookies travel together.
-fn merge_header(headers: &mut HashMap<String, String>, name: &str, value: &str) {
-    if name.eq_ignore_ascii_case("cookie") {
-        if let Some((_, existing)) = headers
-            .iter_mut()
-            .find(|(key, _)| key.eq_ignore_ascii_case(name))
-        {
-            existing.push_str("; ");
-            existing.push_str(value);
-            return;
-        }
-    }
-    headers.insert(name.to_string(), value.to_string());
-}
-
-const REQUEST_ID_HEADERS: &[&str] = &["x-request-id", "openai-request-id", "x-amzn-requestid"];

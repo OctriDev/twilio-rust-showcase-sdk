@@ -32,9 +32,24 @@ fn normalize_query(query: Option<&str>) -> String {
         Some(value) if !value.is_empty() => value,
         _ => return String::new(),
     };
+    // A space is "+" or "%20", and a sub-delimiter (Vercel's quoted filter)
+    // is legal in a query whether encoded or not: both spellings are one value.
     let mut pairs: Vec<String> = raw
         .split('&')
-        .map(|pair| pair.replace("%20", "+"))
+        .map(|pair| {
+            [
+                ("%20", "+"),
+                ("%27", "'"),
+                ("%28", "("),
+                ("%29", ")"),
+                ("%21", "!"),
+                ("%2A", "*"),
+            ]
+            .iter()
+            .fold(pair.to_string(), |text, (encoded, literal)| {
+                text.replace(encoded, literal)
+            })
+        })
         .collect();
     pairs.sort();
     pairs.join("&")
