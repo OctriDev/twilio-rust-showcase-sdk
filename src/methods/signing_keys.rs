@@ -72,6 +72,12 @@ impl ListSigningKeysResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateSigningKeysParams {
+    pub account_sid: String,
+    pub friendly_name: Option<String>,
+}
+
 /// Create a new Signing Key for the account making the request.
 ///
 /// # Arguments
@@ -83,10 +89,13 @@ impl ListSigningKeysResponse {
 ///   resource. It can be up to 64 characters long.
 pub fn create_signing_keys(
     config: &ClientConfig,
-    account_sid: String,
-    friendly_name: Option<String>,
+    params: CreateSigningKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountNewSigningKey, SdkError> {
+    let CreateSigningKeysParams {
+        account_sid,
+        friendly_name,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -130,6 +139,14 @@ pub fn create_signing_keys(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListSigningKeysParams {
+    pub account_sid: String,
+    pub page_size: Option<i64>,
+    pub page: Option<i64>,
+    pub page_token: Option<String>,
+}
+
 /// Lists signing keys for an account. Use the paging parameters to control which results are returned and to continue through the paginated list. The response includes signing key records and page metadata.
 ///
 /// # Arguments
@@ -140,12 +157,15 @@ pub fn create_signing_keys(
 /// * `page_token` - The page token. This is provided by the API.
 pub fn list_signing_keys(
     config: &ClientConfig,
-    account_sid: String,
-    page_size: Option<i64>,
-    page: Option<i64>,
-    page_token: Option<String>,
+    params: ListSigningKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListSigningKeysResponse, SdkError> {
+    let ListSigningKeysParams {
+        account_sid,
+        page_size,
+        page,
+        page_token,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -206,13 +226,19 @@ pub fn list_signing_keys(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSigningKeysParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a specific signing key from an account. Use `AccountSid` and `Sid` to identify the account and signing key; both identifiers must match their documented SID formats.
 pub fn fetch_signing_keys(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: FetchSigningKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSigningKey, SdkError> {
+    let FetchSigningKeysParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -250,14 +276,24 @@ pub fn fetch_signing_keys(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateSigningKeysParams {
+    pub account_sid: String,
+    pub sid: String,
+    pub friendly_name: Option<String>,
+}
+
 /// Updates the friendly name of a signing key. Supply `FriendlyName` to change the name; omit it if you do not want to update that field.
 pub fn update_signing_keys(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
-    friendly_name: Option<String>,
+    params: UpdateSigningKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSigningKey, SdkError> {
+    let UpdateSigningKeysParams {
+        account_sid,
+        sid,
+        friendly_name,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -311,13 +347,19 @@ pub fn update_signing_keys(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSigningKeysParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Deletes a signing key from an account. Identify the account and signing key with their SIDs, using the documented prefixes and 32-character hexadecimal suffixes.
 pub fn delete_signing_keys(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: DeleteSigningKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSigningKeysParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,

@@ -74,6 +74,12 @@ impl ListNotificationsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchNotificationsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a notification belonging to an account. Supply the account SID and notification SID to identify the resource. The response includes notification details such as the message, error information, and originating request data.
 ///
 /// Fetch a notification belonging to the account used to make the request
@@ -87,10 +93,10 @@ impl ListNotificationsResponse {
 ///   Notification resource to fetch.
 pub fn fetch_notifications(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: FetchNotificationsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountNotificationInstance, SdkError> {
+    let FetchNotificationsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,

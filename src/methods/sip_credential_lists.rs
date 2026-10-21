@@ -72,6 +72,14 @@ impl ListSipCredentialListsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListSipCredentialListsParams {
+    pub account_sid: String,
+    pub page_size: Option<i64>,
+    pub page: Option<i64>,
+    pub page_token: Option<String>,
+}
+
 /// Lists SIP credential lists for the specified account. Use `PageSize` to control the number of resources on a page and `PageToken` to request a page identified by a token from the API. The response includes page metadata and a `credential_lists` array.
 ///
 /// Get All Credential Lists
@@ -86,12 +94,15 @@ impl ListSipCredentialListsResponse {
 /// * `page_token` - The page token. This is provided by the API.
 pub fn list_sip_credential_lists(
     config: &ClientConfig,
-    account_sid: String,
-    page_size: Option<i64>,
-    page: Option<i64>,
-    page_token: Option<String>,
+    params: ListSipCredentialListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListSipCredentialListsResponse, SdkError> {
+    let ListSipCredentialListsParams {
+        account_sid,
+        page_size,
+        page,
+        page_token,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -152,6 +163,12 @@ pub fn list_sip_credential_lists(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateSipCredentialListsParams {
+    pub account_sid: String,
+    pub friendly_name: String,
+}
+
 /// Creates a SIP credential list for the specified account. Provide a `FriendlyName` to describe the list; the schema requires this field and the documented description limits it to 64 characters. The response includes the created list's identifier and resource metadata.
 ///
 /// Create a Credential List
@@ -164,10 +181,13 @@ pub fn list_sip_credential_lists(
 ///   CredentialList, up to 64 characters long.
 pub fn create_sip_credential_lists(
     config: &ClientConfig,
-    account_sid: String,
-    friendly_name: String,
+    params: CreateSipCredentialListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipCredentialList, SdkError> {
+    let CreateSipCredentialListsParams {
+        account_sid,
+        friendly_name,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -209,6 +229,12 @@ pub fn create_sip_credential_lists(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSipCredentialListsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a SIP credential list for the specified account. Provide the account identifier and credential list identifier to select the resource. The response includes the list's friendly name, subresource URIs, and other resource metadata.
 ///
 /// Get a Credential List
@@ -220,10 +246,10 @@ pub fn create_sip_credential_lists(
 /// * `sid` - The credential list Sid that uniquely identifies this resource
 pub fn fetch_sip_credential_lists(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: FetchSipCredentialListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipCredentialList, SdkError> {
+    let FetchSipCredentialListsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -261,6 +287,13 @@ pub fn fetch_sip_credential_lists(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateSipCredentialListsParams {
+    pub account_sid: String,
+    pub sid: String,
+    pub friendly_name: String,
+}
+
 /// Updates the friendly name of a SIP credential list for the specified account. Supply `FriendlyName` in the request body; the schema requires this field and the documented description limits it to 64 characters. The response contains the updated list and its resource metadata.
 ///
 /// Update a Credential List
@@ -274,11 +307,14 @@ pub fn fetch_sip_credential_lists(
 ///   up to 64 characters long.
 pub fn update_sip_credential_lists(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
-    friendly_name: String,
+    params: UpdateSipCredentialListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipCredentialList, SdkError> {
+    let UpdateSipCredentialListsParams {
+        account_sid,
+        sid,
+        friendly_name,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -330,6 +366,12 @@ pub fn update_sip_credential_lists(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSipCredentialListsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Deletes a SIP credential list for the specified account. Provide the account identifier and credential list identifier to select the resource to remove. The response confirms deletion and contains no resource representation.
 ///
 /// Delete a Credential List
@@ -341,10 +383,10 @@ pub fn update_sip_credential_lists(
 /// * `sid` - The credential list Sid that uniquely identifies this resource
 pub fn delete_sip_credential_lists(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: DeleteSipCredentialListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSipCredentialListsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,

@@ -301,6 +301,13 @@ pub fn create_sip_ip_access_control_lists_ip_addresses(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSipIpAccessControlListsIpAddressesParams {
+    pub account_sid: String,
+    pub ip_access_control_list_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a specific IP address resource from an IP access control list. Use `AccountSid`, `IpAccessControlListSid`, and `Sid` to identify the account, list, and address. Each identifier must match its resource-specific 34-character format.
 ///
 /// Read one IpAddress resource.
@@ -316,11 +323,14 @@ pub fn create_sip_ip_access_control_lists_ip_addresses(
 ///   resource to fetch.
 pub fn fetch_sip_ip_access_control_lists_ip_addresses(
     config: &ClientConfig,
-    account_sid: String,
-    ip_access_control_list_sid: String,
-    sid: String,
+    params: FetchSipIpAccessControlListsIpAddressesParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipIpAccessControlListSipIpAddress, SdkError> {
+    let FetchSipIpAccessControlListsIpAddressesParams {
+        account_sid,
+        ip_access_control_list_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -509,6 +519,13 @@ pub fn update_sip_ip_access_control_lists_ip_addresses(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSipIpAccessControlListsIpAddressesParams {
+    pub account_sid: String,
+    pub ip_access_control_list_sid: String,
+    pub sid: String,
+}
+
 /// Deletes an IP address entry from a SIP IP access control list. Identify the account, list, and address resource using their SIDs.
 ///
 /// Delete an IpAddress resource.
@@ -524,11 +541,14 @@ pub fn update_sip_ip_access_control_lists_ip_addresses(
 ///   delete.
 pub fn delete_sip_ip_access_control_lists_ip_addresses(
     config: &ClientConfig,
-    account_sid: String,
-    ip_access_control_list_sid: String,
-    sid: String,
+    params: DeleteSipIpAccessControlListsIpAddressesParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSipIpAccessControlListsIpAddressesParams {
+        account_sid,
+        ip_access_control_list_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

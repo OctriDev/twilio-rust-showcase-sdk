@@ -72,6 +72,13 @@ impl ListSipDomainsCredentialListMappingsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateSipDomainsCredentialListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub credential_list_sid: String,
+}
+
 /// Create a CredentialListMapping resource for an account.
 ///
 /// # Arguments
@@ -85,11 +92,14 @@ impl ListSipDomainsCredentialListMappingsResponse {
 ///   CredentialList resource to map to the SIP domain.
 pub fn create_sip_domains_credential_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    credential_list_sid: String,
+    params: CreateSipDomainsCredentialListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipDomainSipCredentialListMapping, SdkError> {
+    let CreateSipDomainsCredentialListMappingsParams {
+        account_sid,
+        domain_sid,
+        credential_list_sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -262,6 +272,13 @@ pub fn list_sip_domains_credential_list_mappings(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSipDomainsCredentialListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a credential list mapping for a SIP domain in an account. Use the account, domain, and mapping identifiers to select the resource; each identifier has a required 34-character format.
 ///
 /// Fetch a single CredentialListMapping resource from an account.
@@ -277,11 +294,14 @@ pub fn list_sip_domains_credential_list_mappings(
 ///   fetch.
 pub fn fetch_sip_domains_credential_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: FetchSipDomainsCredentialListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipDomainSipCredentialListMapping, SdkError> {
+    let FetchSipDomainsCredentialListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -331,6 +351,13 @@ pub fn fetch_sip_domains_credential_list_mappings(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSipDomainsCredentialListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Delete a CredentialListMapping resource from an account.
 ///
 /// # Arguments
@@ -344,11 +371,14 @@ pub fn fetch_sip_domains_credential_list_mappings(
 ///   delete.
 pub fn delete_sip_domains_credential_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: DeleteSipDomainsCredentialListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSipDomainsCredentialListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

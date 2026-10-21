@@ -7,6 +7,13 @@ use crate::errors::{SdkError, SdkNetworkError};
 use crate::types::{ApiV2010AccountMessageMessageFeedback, MessageFeedbackEnumOutcome};
 use crate::validation::{validate_length, validate_pattern, LengthOpts};
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateMessagesFeedbackParams {
+    pub account_sid: String,
+    pub message_sid: String,
+    pub outcome: Option<MessageFeedbackEnumOutcome>,
+}
+
 /// Creates Message Feedback to record whether the recipient performed a tracked action associated with a message. Identify the account and message, then optionally provide the reported `Outcome`. The response contains the created feedback resource.
 ///
 /// Create Message Feedback to confirm a tracked user action was performed by the recipient of the associated Message
@@ -26,11 +33,14 @@ use crate::validation::{validate_length, validate_pattern, LengthOpts};
 ///   -to-twilio).
 pub fn create_messages_feedback(
     config: &ClientConfig,
-    account_sid: String,
-    message_sid: String,
-    outcome: Option<MessageFeedbackEnumOutcome>,
+    params: CreateMessagesFeedbackParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountMessageMessageFeedback, SdkError> {
+    let CreateMessagesFeedbackParams {
+        account_sid,
+        message_sid,
+        outcome,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

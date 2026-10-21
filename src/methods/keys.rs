@@ -72,6 +72,12 @@ impl ListKeysResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchKeysParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a Key resource from an account. Use the account SID and Key SID to identify the resource whose name and timestamps you need.
 ///
 /// # Arguments
@@ -83,10 +89,10 @@ impl ListKeysResponse {
 ///   resource to fetch.
 pub fn fetch_keys(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: FetchKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountKey, SdkError> {
+    let FetchKeysParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -124,6 +130,13 @@ pub fn fetch_keys(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateKeysParams {
+    pub account_sid: String,
+    pub sid: String,
+    pub friendly_name: Option<String>,
+}
+
 /// Updates the friendly name of a Key resource in an account. Supply `FriendlyName` to change the resource's descriptive name; the request body may be omitted when you have no field to update.
 ///
 /// # Arguments
@@ -137,11 +150,14 @@ pub fn fetch_keys(
 ///   resource. It can be up to 64 characters long.
 pub fn update_keys(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
-    friendly_name: Option<String>,
+    params: UpdateKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountKey, SdkError> {
+    let UpdateKeysParams {
+        account_sid,
+        sid,
+        friendly_name,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -195,6 +211,12 @@ pub fn update_keys(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteKeysParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Deletes a specific API Key from an account. Supply the account SID and the SID of the key you want to remove.
 ///
 /// # Arguments
@@ -206,10 +228,10 @@ pub fn update_keys(
 ///   resource to delete.
 pub fn delete_keys(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: DeleteKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteKeysParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -247,6 +269,14 @@ pub fn delete_keys(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListKeysParams {
+    pub account_sid: String,
+    pub page_size: Option<i64>,
+    pub page: Option<i64>,
+    pub page_token: Option<String>,
+}
+
 /// Lists API Keys created by a specific account. Use the page parameters to navigate the results, and set `PageSize` to control how many keys each page contains.
 ///
 /// # Arguments
@@ -260,12 +290,15 @@ pub fn delete_keys(
 /// * `page_token` - The page token. This is provided by the API.
 pub fn list_keys(
     config: &ClientConfig,
-    account_sid: String,
-    page_size: Option<i64>,
-    page: Option<i64>,
-    page_token: Option<String>,
+    params: ListKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListKeysResponse, SdkError> {
+    let ListKeysParams {
+        account_sid,
+        page_size,
+        page,
+        page_token,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -326,6 +359,12 @@ pub fn list_keys(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateKeysParams {
+    pub account_sid: String,
+    pub friendly_name: Option<String>,
+}
+
 /// Creates a new API Key for an account. Optionally provide `FriendlyName` to label the key; the response includes its secret, which is returned only when the key is first created.
 ///
 /// # Arguments
@@ -337,10 +376,13 @@ pub fn list_keys(
 ///   resource. It can be up to 64 characters long.
 pub fn create_keys(
     config: &ClientConfig,
-    account_sid: String,
-    friendly_name: Option<String>,
+    params: CreateKeysParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountNewKey, SdkError> {
+    let CreateKeysParams {
+        account_sid,
+        friendly_name,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

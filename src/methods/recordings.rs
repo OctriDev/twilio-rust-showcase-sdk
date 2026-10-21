@@ -74,6 +74,13 @@ impl ListRecordingsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchRecordingsParams {
+    pub account_sid: String,
+    pub sid: String,
+    pub include_soft_deleted: Option<bool>,
+}
+
 /// Retrieves a recording by its SID. Set `IncludeSoftDeleted` to include metadata for recordings that have been deleted; that metadata is retained for 40 days.
 ///
 /// Fetch an instance of a recording
@@ -90,11 +97,14 @@ impl ListRecordingsResponse {
 ///   deletion for a retention period of 40 days.
 pub fn fetch_recordings(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
-    include_soft_deleted: Option<bool>,
+    params: FetchRecordingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountRecording, SdkError> {
+    let FetchRecordingsParams {
+        account_sid,
+        sid,
+        include_soft_deleted,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -138,6 +148,12 @@ pub fn fetch_recordings(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteRecordingsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Deletes a recording from an account. Use `AccountSid` and `Sid` to identify the account and recording to remove.
 ///
 /// Delete a recording from your account
@@ -151,10 +167,10 @@ pub fn fetch_recordings(
 ///   resource to delete.
 pub fn delete_recordings(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: DeleteRecordingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteRecordingsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,

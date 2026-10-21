@@ -74,6 +74,13 @@ impl ListSipDomainsAuthCallsCredentialListMappingsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateSipDomainsAuthCallsCredentialListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub credential_list_sid: String,
+}
+
 /// Creates a credential list mapping for calls on a SIP domain. Supply `CredentialListSid` to identify the credential list to map; the account and domain SIDs identify where the mapping is created.
 ///
 /// Create a new credential list mapping resource
@@ -89,12 +96,15 @@ impl ListSipDomainsAuthCallsCredentialListMappingsResponse {
 ///   the SIP domain.
 pub fn create_sip_domains_auth_calls_credential_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    credential_list_sid: String,
+    params: CreateSipDomainsAuthCallsCredentialListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipDomainSipAuthSipAuthCallsSipAuthCallsCredentialListMapping, SdkError>
 {
+    let CreateSipDomainsAuthCallsCredentialListMappingsParams {
+        account_sid,
+        domain_sid,
+        credential_list_sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -269,6 +279,13 @@ pub fn list_sip_domains_auth_calls_credential_list_mappings(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSipDomainsAuthCallsCredentialListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a specific credential list mapping for calls on a SIP domain. Use the account, domain, and mapping SIDs to identify the resource; each SID must match its documented format.
 ///
 /// Fetch a specific instance of a credential list mapping
@@ -284,12 +301,15 @@ pub fn list_sip_domains_auth_calls_credential_list_mappings(
 ///   CredentialListMapping resource to fetch.
 pub fn fetch_sip_domains_auth_calls_credential_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: FetchSipDomainsAuthCallsCredentialListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipDomainSipAuthSipAuthCallsSipAuthCallsCredentialListMapping, SdkError>
 {
+    let FetchSipDomainsAuthCallsCredentialListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -339,6 +359,13 @@ pub fn fetch_sip_domains_auth_calls_credential_list_mappings(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSipDomainsAuthCallsCredentialListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Delete a credential list mapping from the requested domain
 ///
 /// # Arguments
@@ -352,11 +379,14 @@ pub fn fetch_sip_domains_auth_calls_credential_list_mappings(
 ///   CredentialListMapping resource to delete.
 pub fn delete_sip_domains_auth_calls_credential_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: DeleteSipDomainsAuthCallsCredentialListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSipDomainsAuthCallsCredentialListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

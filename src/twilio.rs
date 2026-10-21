@@ -19,10 +19,10 @@ impl AccountsNamespace {
     /// Create a new Twilio Subaccount from the account making the request
     pub fn create(
         &self,
-        friendly_name: Option<String>,
+        params: crate::methods::accounts::CreateAccountsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010Account, crate::errors::SdkError> {
-        crate::methods::accounts::create_accounts(&self.config, friendly_name, options)
+        crate::methods::accounts::create_accounts(&self.config, params, options)
     }
     /// Lists account resources associated with the account used to make the request. Filter by exact `FriendlyName` or by `Status`, and use `PageSize`, `Page`, and `PageToken` to control pagination.
     ///
@@ -39,22 +39,20 @@ impl AccountsNamespace {
     /// Fetch the account specified by the provided Account Sid
     pub fn fetch(
         &self,
-        sid: String,
+        params: crate::methods::accounts::FetchAccountsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010Account, crate::errors::SdkError> {
-        crate::methods::accounts::fetch_accounts(&self.config, sid, options)
+        crate::methods::accounts::fetch_accounts(&self.config, params, options)
     }
     /// Updates properties of a specific account. Supply `FriendlyName`, `Status`, or both to change the account; a 409 response indicates that another request modified the account concurrently.
     ///
     /// Modify the properties of a given Account
     pub fn update(
         &self,
-        sid: String,
-        friendly_name: Option<String>,
-        status: Option<AccountEnumStatus>,
+        params: crate::methods::accounts::UpdateAccountsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010Account, crate::errors::SdkError> {
-        crate::methods::accounts::update_accounts(&self.config, sid, friendly_name, status, options)
+        crate::methods::accounts::update_accounts(&self.config, params, options)
     }
 }
 
@@ -113,20 +111,18 @@ impl AddressesNamespace {
     /// Deletes a specific address resource associated with an account. Supply the account SID and address SID to identify the address to remove.
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::addresses::DeleteAddressesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::addresses::delete_addresses(&self.config, account_sid, sid, options)
+        crate::methods::addresses::delete_addresses(&self.config, params, options)
     }
     /// Retrieves a specific address resource associated with an account. Supply the account SID and address SID to identify the resource.
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::addresses::FetchAddressesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountAddress, crate::errors::SdkError> {
-        crate::methods::addresses::fetch_addresses(&self.config, account_sid, sid, options)
+        crate::methods::addresses::fetch_addresses(&self.config, params, options)
     }
     /// Updates properties of a specific address resource. Submit only the address fields you want to change; `AutoCorrectAddress` defaults to true when omitted.
     pub fn update(
@@ -174,22 +170,20 @@ impl ApplicationsNamespace {
     /// Delete the application by the specified application sid
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::applications::DeleteApplicationsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::applications::delete_applications(&self.config, account_sid, sid, options)
+        crate::methods::applications::delete_applications(&self.config, params, options)
     }
     /// Retrieves an application from an account by its SID. Supply the account SID and application SID to identify the resource and retrieve its configuration, including voice and messaging settings.
     ///
     /// Fetch the application specified by the provided sid
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::applications::FetchApplicationsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountApplication, crate::errors::SdkError> {
-        crate::methods::applications::fetch_applications(&self.config, account_sid, sid, options)
+        crate::methods::applications::fetch_applications(&self.config, params, options)
     }
     /// Updates the properties of an existing application. Supply the fields you want to change, such as `FriendlyName`, `VoiceUrl`, or `SmsUrl`; URL fields must use URI format, and HTTP method fields accept GET or POST.
     ///
@@ -220,14 +214,12 @@ impl AuthorizedConnectAppsNamespace {
     /// Fetch an instance of an authorized-connect-app
     pub fn fetch(
         &self,
-        account_sid: String,
-        connect_app_sid: String,
+        params: crate::methods::authorized_connect_apps::FetchAuthorizedConnectAppsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountAuthorizedConnectApp, crate::errors::SdkError> {
         crate::methods::authorized_connect_apps::fetch_authorized_connect_apps(
             &self.config,
-            account_sid,
-            connect_app_sid,
+            params,
             options,
         )
     }
@@ -236,10 +228,7 @@ impl AuthorizedConnectAppsNamespace {
     /// Retrieve a list of authorized-connect-apps belonging to the account used to make the request
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::authorized_connect_apps::ListAuthorizedConnectAppsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         crate::methods::authorized_connect_apps::ListAuthorizedConnectAppsResponse,
@@ -247,10 +236,7 @@ impl AuthorizedConnectAppsNamespace {
     > {
         crate::methods::authorized_connect_apps::list_authorized_connect_apps(
             &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
+            params,
             options,
         )
     }
@@ -271,10 +257,7 @@ impl AvailablePhoneNumbersNamespace {
     /// Lists the countries for which phone numbers are available to an account. Use the returned country codes to retrieve country details or browse available numbers for a specific country.
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::available_phone_numbers::ListAvailablePhoneNumbersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         crate::methods::available_phone_numbers::ListAvailablePhoneNumbersResponse,
@@ -282,24 +265,19 @@ impl AvailablePhoneNumbersNamespace {
     > {
         crate::methods::available_phone_numbers::list_available_phone_numbers(
             &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
+            params,
             options,
         )
     }
     /// Retrieves available phone number information for a specific country. Supply the account SID and an ISO 3166-1 country code to get the country name, beta status, and related available-number resources.
     pub fn fetch(
         &self,
-        account_sid: String,
-        country_code: String,
+        params: crate::methods::available_phone_numbers::FetchAvailablePhoneNumbersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountAvailablePhoneNumberCountry, crate::errors::SdkError> {
         crate::methods::available_phone_numbers::fetch_available_phone_numbers(
             &self.config,
-            account_sid,
-            country_code,
+            params,
             options,
         )
     }
@@ -427,10 +405,10 @@ impl BalanceNamespace {
     /// Fetch the balance for an Account based on Account Sid. Balance changes may not be reflected immediately. Child accounts do not contain balance information
     pub fn fetch(
         &self,
-        account_sid: String,
+        params: crate::methods::balance::FetchBalanceParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountBalance, crate::errors::SdkError> {
-        crate::methods::balance::fetch_balance(&self.config, account_sid, options)
+        crate::methods::balance::fetch_balance(&self.config, params, options)
     }
 }
 
@@ -474,16 +452,12 @@ impl CallsNotificationsNamespace {
     /// Retrieves a notification associated with a specific call. Use the account, call, and notification SIDs to identify the resource and inspect its error details, request, and response information.
     pub fn fetch(
         &self,
-        account_sid: String,
-        call_sid: String,
-        sid: String,
+        params: crate::methods::calls_notifications::FetchCallsNotificationsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountCallCallNotificationInstance, crate::errors::SdkError> {
         crate::methods::calls_notifications::fetch_calls_notifications(
             &self.config,
-            account_sid,
-            call_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -550,36 +524,20 @@ impl CallsRecordingsNamespace {
     /// Fetch an instance of a recording for a call
     pub fn fetch(
         &self,
-        account_sid: String,
-        call_sid: String,
-        sid: String,
+        params: crate::methods::calls_recordings::FetchCallsRecordingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountCallCallRecording, crate::errors::SdkError> {
-        crate::methods::calls_recordings::fetch_calls_recordings(
-            &self.config,
-            account_sid,
-            call_sid,
-            sid,
-            options,
-        )
+        crate::methods::calls_recordings::fetch_calls_recordings(&self.config, params, options)
     }
     /// Deletes a recording associated with a specific call from the account. Supply the account, call, and recording SIDs to identify the recording to remove.
     ///
     /// Delete a recording from your account
     pub fn delete(
         &self,
-        account_sid: String,
-        call_sid: String,
-        sid: String,
+        params: crate::methods::calls_recordings::DeleteCallsRecordingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::calls_recordings::delete_calls_recordings(
-            &self.config,
-            account_sid,
-            call_sid,
-            sid,
-            options,
-        )
+        crate::methods::calls_recordings::delete_calls_recordings(&self.config, params, options)
     }
 }
 
@@ -644,18 +602,12 @@ impl CallsTranscriptionsNamespace {
     /// Stop a Transcription using either the SID of the Transcription resource or the `name` used when creating the resource
     pub fn update(
         &self,
-        account_sid: String,
-        call_sid: String,
-        sid: String,
-        status: RealtimeTranscriptionEnumUpdateStatus,
+        params: crate::methods::calls_transcriptions::UpdateCallsTranscriptionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountCallRealtimeTranscription, crate::errors::SdkError> {
         crate::methods::calls_transcriptions::update_calls_transcriptions(
             &self.config,
-            account_sid,
-            call_sid,
-            sid,
-            status,
+            params,
             options,
         )
     }
@@ -688,20 +640,10 @@ impl CallsSiprecNamespace {
     /// Stop a Siprec using either the SID of the Siprec resource or the `name` used when creating the resource
     pub fn update(
         &self,
-        account_sid: String,
-        call_sid: String,
-        sid: String,
-        status: SiprecEnumUpdateStatus,
+        params: crate::methods::calls_siprec::UpdateCallsSiprecParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountCallSiprec, crate::errors::SdkError> {
-        crate::methods::calls_siprec::update_calls_siprec(
-            &self.config,
-            account_sid,
-            call_sid,
-            sid,
-            status,
-            options,
-        )
+        crate::methods::calls_siprec::update_calls_siprec(&self.config, params, options)
     }
 }
 
@@ -732,20 +674,10 @@ impl CallsStreamsNamespace {
     /// Stop a Stream using either the SID of the Stream resource or the `name` used when creating the resource
     pub fn update(
         &self,
-        account_sid: String,
-        call_sid: String,
-        sid: String,
-        status: StreamEnumUpdateStatus,
+        params: crate::methods::calls_streams::UpdateCallsStreamsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountCallStream, crate::errors::SdkError> {
-        crate::methods::calls_streams::update_calls_streams(
-            &self.config,
-            account_sid,
-            call_sid,
-            sid,
-            status,
-            options,
-        )
+        crate::methods::calls_streams::update_calls_streams(&self.config, params, options)
     }
 }
 
@@ -764,18 +696,12 @@ impl CallsUserDefinedMessagesNamespace {
     /// Create a new User Defined Message for the given Call SID.
     pub fn create(
         &self,
-        account_sid: String,
-        call_sid: String,
-        content: String,
-        idempotency_key: Option<String>,
+        params: crate::methods::calls_user_defined_messages::CreateCallsUserDefinedMessagesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountCallUserDefinedMessage, crate::errors::SdkError> {
         crate::methods::calls_user_defined_messages::create_calls_user_defined_messages(
             &self.config,
-            account_sid,
-            call_sid,
-            content,
-            idempotency_key,
+            params,
             options,
         )
     }
@@ -796,20 +722,18 @@ impl CallsUserDefinedMessageSubscriptionsNamespace {
     /// Subscribe to User Defined Messages for a given Call SID.
     pub fn create(
         &self,
-        params: crate::methods::calls_user_defined_message_subscriptions::CreateCallsUserDefinedMessageSubscriptionsParams,
+        params: crate::methods::calls_user_defined_message_subscriptions::CreateCallUserDefinedMessageSubscriptionParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountCallUserDefinedMessageSubscription, crate::errors::SdkError> {
-        crate::methods::calls_user_defined_message_subscriptions::create_calls_user_defined_message_subscriptions(&self.config, params, options)
+        crate::methods::calls_user_defined_message_subscriptions::create_call_user_defined_message_subscription(&self.config, params, options)
     }
     /// Delete a specific User Defined Message Subscription.
     pub fn delete(
         &self,
-        account_sid: String,
-        call_sid: String,
-        sid: String,
+        params: crate::methods::calls_user_defined_message_subscriptions::DeleteCallsUserDefinedMessageSubscriptionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::calls_user_defined_message_subscriptions::delete_calls_user_defined_message_subscriptions(&self.config, account_sid, call_sid, sid, options)
+        crate::methods::calls_user_defined_message_subscriptions::delete_calls_user_defined_message_subscriptions(&self.config, params, options)
     }
 }
 
@@ -866,22 +790,20 @@ impl CallsNamespace {
     /// Delete a Call record from your account. Once the record is deleted, it will no longer appear in the API and Account Portal logs.
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::calls::DeleteCallsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::calls::delete_calls(&self.config, account_sid, sid, options)
+        crate::methods::calls::delete_calls(&self.config, params, options)
     }
     /// Retrieves a specific call from an account. Provide the account SID and call SID to identify the call whose details you need. The response includes call status and timing information when available.
     ///
     /// Fetch the call specified by the provided Call SID
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::calls::FetchCallsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountCall, crate::errors::SdkError> {
-        crate::methods::calls::fetch_calls(&self.config, account_sid, sid, options)
+        crate::methods::calls::fetch_calls(&self.config, params, options)
     }
     /// Updates a call by redirecting it to new TwiML instructions or by terminating it. Provide either a `Url` to retrieve instructions from or `Twiml` instructions directly; these fields are mutually exclusive. Use `Status` to cancel or complete the call, or configure callback and request-method settings for a redirect.
     ///
@@ -943,16 +865,12 @@ impl ConferencesRecordingsNamespace {
     /// Fetch an instance of a recording for a call
     pub fn fetch(
         &self,
-        account_sid: String,
-        conference_sid: String,
-        sid: String,
+        params: crate::methods::conferences_recordings::FetchConferencesRecordingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountConferenceConferenceRecording, crate::errors::SdkError> {
         crate::methods::conferences_recordings::fetch_conferences_recordings(
             &self.config,
-            account_sid,
-            conference_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -961,16 +879,12 @@ impl ConferencesRecordingsNamespace {
     /// Delete a recording from your account
     pub fn delete(
         &self,
-        account_sid: String,
-        conference_sid: String,
-        sid: String,
+        params: crate::methods::conferences_recordings::DeleteConferencesRecordingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::conferences_recordings::delete_conferences_recordings(
             &self.config,
-            account_sid,
-            conference_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -993,16 +907,12 @@ impl ConferencesParticipantsNamespace {
     /// Fetch an instance of a participant
     pub fn fetch(
         &self,
-        account_sid: String,
-        conference_sid: String,
-        call_sid: String,
+        params: crate::methods::conferences_participants::FetchConferencesParticipantsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountConferenceParticipant, crate::errors::SdkError> {
         crate::methods::conferences_participants::fetch_conferences_participants(
             &self.config,
-            account_sid,
-            conference_sid,
-            call_sid,
+            params,
             options,
         )
     }
@@ -1025,16 +935,12 @@ impl ConferencesParticipantsNamespace {
     /// Kick a participant from a given conference
     pub fn delete(
         &self,
-        account_sid: String,
-        conference_sid: String,
-        call_sid: String,
+        params: crate::methods::conferences_participants::DeleteConferencesParticipantsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::conferences_participants::delete_conferences_participants(
             &self.config,
-            account_sid,
-            conference_sid,
-            call_sid,
+            params,
             options,
         )
     }
@@ -1090,11 +996,10 @@ impl ConferencesNamespace {
     /// Fetch an instance of a conference
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::conferences::FetchConferencesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountConference, crate::errors::SdkError> {
-        crate::methods::conferences::fetch_conferences(&self.config, account_sid, sid, options)
+        crate::methods::conferences::fetch_conferences(&self.config, params, options)
     }
     /// Updates a conference's status or announcement configuration. Set `Status` to `completed` to end the conference, or provide an announcement URL and its HTTP method. The response contains the updated conference resource.
     pub fn update(
@@ -1133,11 +1038,10 @@ impl ConnectAppsNamespace {
     /// Fetch an instance of a connect-app
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::connect_apps::FetchConnectAppsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountConnectApp, crate::errors::SdkError> {
-        crate::methods::connect_apps::fetch_connect_apps(&self.config, account_sid, sid, options)
+        crate::methods::connect_apps::fetch_connect_apps(&self.config, params, options)
     }
     /// Updates the configuration of a Connect App belonging to an account. Provide the fields to change, such as its redirect URLs, descriptive details, or requested permissions.
     ///
@@ -1154,32 +1058,21 @@ impl ConnectAppsNamespace {
     /// Delete an instance of a connect-app
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::connect_apps::DeleteConnectAppsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::connect_apps::delete_connect_apps(&self.config, account_sid, sid, options)
+        crate::methods::connect_apps::delete_connect_apps(&self.config, params, options)
     }
     /// Lists Connect Apps belonging to the specified account. Use the page parameters to navigate through the account's Connect Apps.
     ///
     /// Retrieve a list of connect-apps belonging to the account used to make the request
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::connect_apps::ListConnectAppsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<crate::methods::connect_apps::ListConnectAppsResponse, crate::errors::SdkError>
     {
-        crate::methods::connect_apps::list_connect_apps(
-            &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
-            options,
-        )
+        crate::methods::connect_apps::list_connect_apps(&self.config, params, options)
     }
 }
 
@@ -1198,8 +1091,8 @@ impl IncomingPhoneNumbersAssignedAddOnsExtensionsNamespace {
     /// Retrieves an Extension for an assigned Add-on on an incoming phone number. Use the account, phone number, assigned Add-on, and Extension SIDs to identify the resource.
     ///
     /// Fetch an instance of an Extension for the Assigned Add-on.
-    pub fn fetch(&self, account_sid: String, resource_sid: String, assigned_add_on_sid: String, sid: String, options: Option<&crate::client::RequestOptions>) -> Result<ApiV2010AccountIncomingPhoneNumberIncomingPhoneNumberAssignedAddOnIncomingPhoneNumberAssignedAddOnExtension, crate::errors::SdkError>{
-        crate::methods::incoming_phone_numbers_assigned_add_ons_extensions::fetch_incoming_phone_numbers_assigned_add_ons_extensions(&self.config, account_sid, resource_sid, assigned_add_on_sid, sid, options)
+    pub fn fetch(&self, params: crate::methods::incoming_phone_numbers_assigned_add_ons_extensions::FetchIncomingPhoneNumbersAssignedAddOnsExtensionsParams, options: Option<&crate::client::RequestOptions>) -> Result<ApiV2010AccountIncomingPhoneNumberIncomingPhoneNumberAssignedAddOnIncomingPhoneNumberAssignedAddOnExtension, crate::errors::SdkError>{
+        crate::methods::incoming_phone_numbers_assigned_add_ons_extensions::fetch_incoming_phone_numbers_assigned_add_ons_extensions(&self.config, params, options)
     }
     /// Lists Extensions for an assigned Add-on on an incoming phone number. Use the account, phone number, and assigned Add-on SIDs to scope the list, and the paging parameters to select a page of results.
     ///
@@ -1228,25 +1121,21 @@ impl IncomingPhoneNumbersAssignedAddOnsNamespace {
     /// Fetch an instance of an Add-on installation currently assigned to this Number.
     pub fn fetch(
         &self,
-        account_sid: String,
-        resource_sid: String,
-        sid: String,
+        params: crate::methods::incoming_phone_numbers_assigned_add_ons::FetchIncomingPhoneNumbersAssignedAddOnsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         ApiV2010AccountIncomingPhoneNumberIncomingPhoneNumberAssignedAddOn,
         crate::errors::SdkError,
     > {
-        crate::methods::incoming_phone_numbers_assigned_add_ons::fetch_incoming_phone_numbers_assigned_add_ons(&self.config, account_sid, resource_sid, sid, options)
+        crate::methods::incoming_phone_numbers_assigned_add_ons::fetch_incoming_phone_numbers_assigned_add_ons(&self.config, params, options)
     }
     /// Remove the assignment of an Add-on installation from the Number specified.
     pub fn delete(
         &self,
-        account_sid: String,
-        resource_sid: String,
-        sid: String,
+        params: crate::methods::incoming_phone_numbers_assigned_add_ons::DeleteIncomingPhoneNumbersAssignedAddOnsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::incoming_phone_numbers_assigned_add_ons::delete_incoming_phone_numbers_assigned_add_ons(&self.config, account_sid, resource_sid, sid, options)
+        crate::methods::incoming_phone_numbers_assigned_add_ons::delete_incoming_phone_numbers_assigned_add_ons(&self.config, params, options)
     }
     /// Lists add-on installations assigned to an incoming phone number. Use the account SID and phone number SID to scope the results, and use the page parameters to navigate the list.
     ///
@@ -1257,15 +1146,13 @@ impl IncomingPhoneNumbersAssignedAddOnsNamespace {
     /// Assign an Add-on installation to the Number specified.
     pub fn create(
         &self,
-        account_sid: String,
-        resource_sid: String,
-        installed_add_on_sid: String,
+        params: crate::methods::incoming_phone_numbers_assigned_add_ons::CreateIncomingPhoneNumbersAssignedAddOnsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         ApiV2010AccountIncomingPhoneNumberIncomingPhoneNumberAssignedAddOn,
         crate::errors::SdkError,
     > {
-        crate::methods::incoming_phone_numbers_assigned_add_ons::create_incoming_phone_numbers_assigned_add_ons(&self.config, account_sid, resource_sid, installed_add_on_sid, options)
+        crate::methods::incoming_phone_numbers_assigned_add_ons::create_incoming_phone_numbers_assigned_add_ons(&self.config, params, options)
     }
 }
 
@@ -1302,28 +1189,24 @@ impl IncomingPhoneNumbersNamespace {
     /// Fetch an incoming-phone-number belonging to the account used to make the request.
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::incoming_phone_numbers::FetchIncomingPhoneNumbersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountIncomingPhoneNumber, crate::errors::SdkError> {
         crate::methods::incoming_phone_numbers::fetch_incoming_phone_numbers(
             &self.config,
-            account_sid,
-            sid,
+            params,
             options,
         )
     }
     /// Delete a phone-numbers belonging to the account used to make the request.
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::incoming_phone_numbers::DeleteIncomingPhoneNumbersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::incoming_phone_numbers::delete_incoming_phone_numbers(
             &self.config,
-            account_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -1461,57 +1344,42 @@ impl KeysNamespace {
     /// Retrieves a Key resource from an account. Use the account SID and Key SID to identify the resource whose name and timestamps you need.
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::keys::FetchKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountKey, crate::errors::SdkError> {
-        crate::methods::keys::fetch_keys(&self.config, account_sid, sid, options)
+        crate::methods::keys::fetch_keys(&self.config, params, options)
     }
     /// Updates the friendly name of a Key resource in an account. Supply `FriendlyName` to change the resource's descriptive name; the request body may be omitted when you have no field to update.
     pub fn update(
         &self,
-        account_sid: String,
-        sid: String,
-        friendly_name: Option<String>,
+        params: crate::methods::keys::UpdateKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountKey, crate::errors::SdkError> {
-        crate::methods::keys::update_keys(&self.config, account_sid, sid, friendly_name, options)
+        crate::methods::keys::update_keys(&self.config, params, options)
     }
     /// Deletes a specific API Key from an account. Supply the account SID and the SID of the key you want to remove.
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::keys::DeleteKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::keys::delete_keys(&self.config, account_sid, sid, options)
+        crate::methods::keys::delete_keys(&self.config, params, options)
     }
     /// Lists API Keys created by a specific account. Use the page parameters to navigate the results, and set `PageSize` to control how many keys each page contains.
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::keys::ListKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<crate::methods::keys::ListKeysResponse, crate::errors::SdkError> {
-        crate::methods::keys::list_keys(
-            &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
-            options,
-        )
+        crate::methods::keys::list_keys(&self.config, params, options)
     }
     /// Creates a new API Key for an account. Optionally provide `FriendlyName` to label the key; the response includes its secret, which is returned only when the key is first created.
     pub fn create(
         &self,
-        account_sid: String,
-        friendly_name: Option<String>,
+        params: crate::methods::keys::CreateKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountNewKey, crate::errors::SdkError> {
-        crate::methods::keys::create_keys(&self.config, account_sid, friendly_name, options)
+        crate::methods::keys::create_keys(&self.config, params, options)
     }
 }
 
@@ -1532,36 +1400,20 @@ impl MessagesMediaNamespace {
     /// Delete the Media resource.
     pub fn delete(
         &self,
-        account_sid: String,
-        message_sid: String,
-        sid: String,
+        params: crate::methods::messages_media::DeleteMessagesMediaParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::messages_media::delete_messages_media(
-            &self.config,
-            account_sid,
-            message_sid,
-            sid,
-            options,
-        )
+        crate::methods::messages_media::delete_messages_media(&self.config, params, options)
     }
     /// Retrieves a specific media resource associated with a message. Supply the account SID, message SID, and media SID to identify the resource.
     ///
     /// Fetch a single Media resource associated with a specific Message resource
     pub fn fetch(
         &self,
-        account_sid: String,
-        message_sid: String,
-        sid: String,
+        params: crate::methods::messages_media::FetchMessagesMediaParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountMessageMedia, crate::errors::SdkError> {
-        crate::methods::messages_media::fetch_messages_media(
-            &self.config,
-            account_sid,
-            message_sid,
-            sid,
-            options,
-        )
+        crate::methods::messages_media::fetch_messages_media(&self.config, params, options)
     }
     /// Lists media resources associated with a specific message. Filter the results by creation date and use the page parameters to navigate the list.
     ///
@@ -1593,18 +1445,10 @@ impl MessagesFeedbackNamespace {
     /// Create Message Feedback to confirm a tracked user action was performed by the recipient of the associated Message
     pub fn create(
         &self,
-        account_sid: String,
-        message_sid: String,
-        outcome: Option<MessageFeedbackEnumOutcome>,
+        params: crate::methods::messages_feedback::CreateMessagesFeedbackParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountMessageMessageFeedback, crate::errors::SdkError> {
-        crate::methods::messages_feedback::create_messages_feedback(
-            &self.config,
-            account_sid,
-            message_sid,
-            outcome,
-            options,
-        )
+        crate::methods::messages_feedback::create_messages_feedback(&self.config, params, options)
     }
 }
 
@@ -1649,42 +1493,30 @@ impl MessagesNamespace {
     /// Deletes a Message resource from your account
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::messages::DeleteMessagesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::messages::delete_messages(&self.config, account_sid, sid, options)
+        crate::methods::messages::delete_messages(&self.config, params, options)
     }
     /// Retrieves a specific Message resource belonging to an account. Provide the account SID and Message SID to identify the resource. The response includes the message content, delivery status, and resource metadata.
     ///
     /// Fetch a specific Message
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::messages::FetchMessagesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountMessage, crate::errors::SdkError> {
-        crate::methods::messages::fetch_messages(&self.config, account_sid, sid, options)
+        crate::methods::messages::fetch_messages(&self.config, params, options)
     }
     /// Updates a Message resource to change its body or cancel a message that has not yet been sent. Supply `Body` to replace the message text or set it to an empty string to redact the text; use `Status` to cancel the message. The response returns the updated Message resource.
     ///
     /// Update a Message resource (used to redact Message `body` text and to cancel not-yet-sent messages)
     pub fn update(
         &self,
-        account_sid: String,
-        sid: String,
-        body: Option<String>,
-        status: Option<MessageEnumUpdateStatus>,
+        params: crate::methods::messages::UpdateMessagesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountMessage, crate::errors::SdkError> {
-        crate::methods::messages::update_messages(
-            &self.config,
-            account_sid,
-            sid,
-            body,
-            status,
-            options,
-        )
+        crate::methods::messages::update_messages(&self.config, params, options)
     }
 }
 
@@ -1705,18 +1537,10 @@ impl QueuesMembersNamespace {
     /// Fetch a specific member from the queue
     pub fn fetch(
         &self,
-        account_sid: String,
-        queue_sid: String,
-        call_sid: String,
+        params: crate::methods::queues_members::FetchQueuesMembersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountQueueMember, crate::errors::SdkError> {
-        crate::methods::queues_members::fetch_queues_members(
-            &self.config,
-            account_sid,
-            queue_sid,
-            call_sid,
-            options,
-        )
+        crate::methods::queues_members::fetch_queues_members(&self.config, params, options)
     }
     /// Dequeues a specific member and starts the call's execution at the supplied URL. Provide `Url` as the destination, and use `Method` to choose whether request data is sent as form data or query parameters.
     ///
@@ -1760,80 +1584,50 @@ impl QueuesNamespace {
     /// Fetch an instance of a queue identified by the QueueSid
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::queues::FetchQueuesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountQueue, crate::errors::SdkError> {
-        crate::methods::queues::fetch_queues(&self.config, account_sid, sid, options)
+        crate::methods::queues::fetch_queues(&self.config, params, options)
     }
     /// Updates the name or maximum size of a queue. Use `AccountSid` and `Sid` to identify the queue, and supply `FriendlyName`, `MaxSize`, or both to change its settings. The response contains the updated queue object.
     ///
     /// Update the queue with the new parameters
     pub fn update(
         &self,
-        account_sid: String,
-        sid: String,
-        friendly_name: Option<String>,
-        max_size: Option<i64>,
+        params: crate::methods::queues::UpdateQueuesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountQueue, crate::errors::SdkError> {
-        crate::methods::queues::update_queues(
-            &self.config,
-            account_sid,
-            sid,
-            friendly_name,
-            max_size,
-            options,
-        )
+        crate::methods::queues::update_queues(&self.config, params, options)
     }
     /// Deletes an empty queue from an account. Use `AccountSid` and `Sid` to identify the account and queue; the queue must be empty before you remove it.
     ///
     /// Remove an empty queue
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::queues::DeleteQueuesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::queues::delete_queues(&self.config, account_sid, sid, options)
+        crate::methods::queues::delete_queues(&self.config, params, options)
     }
     /// Lists queues belonging to an account. Use `PageSize` to control the number of queues per page and `Page` or `PageToken` to navigate the results.
     ///
     /// Retrieve a list of queues belonging to the account used to make the request
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::queues::ListQueuesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<crate::methods::queues::ListQueuesResponse, crate::errors::SdkError> {
-        crate::methods::queues::list_queues(
-            &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
-            options,
-        )
+        crate::methods::queues::list_queues(&self.config, params, options)
     }
     /// Creates a queue for an account. Supply `FriendlyName` to describe the queue; `MaxSize` controls the number of calls it can hold and defaults to 1000 when omitted. The response contains the created queue and its generated SID.
     ///
     /// Create a queue
     pub fn create(
         &self,
-        account_sid: String,
-        friendly_name: String,
-        max_size: Option<i64>,
+        params: crate::methods::queues::CreateQueuesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountQueue, crate::errors::SdkError> {
-        crate::methods::queues::create_queues(
-            &self.config,
-            account_sid,
-            friendly_name,
-            max_size,
-            options,
-        )
+        crate::methods::queues::create_queues(&self.config, params, options)
     }
 }
 
@@ -1852,69 +1646,43 @@ impl SigningKeysNamespace {
     /// Create a new Signing Key for the account making the request.
     pub fn create(
         &self,
-        account_sid: String,
-        friendly_name: Option<String>,
+        params: crate::methods::signing_keys::CreateSigningKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountNewSigningKey, crate::errors::SdkError> {
-        crate::methods::signing_keys::create_signing_keys(
-            &self.config,
-            account_sid,
-            friendly_name,
-            options,
-        )
+        crate::methods::signing_keys::create_signing_keys(&self.config, params, options)
     }
     /// Lists signing keys for an account. Use the paging parameters to control which results are returned and to continue through the paginated list. The response includes signing key records and page metadata.
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::signing_keys::ListSigningKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<crate::methods::signing_keys::ListSigningKeysResponse, crate::errors::SdkError>
     {
-        crate::methods::signing_keys::list_signing_keys(
-            &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
-            options,
-        )
+        crate::methods::signing_keys::list_signing_keys(&self.config, params, options)
     }
     /// Retrieves a specific signing key from an account. Use `AccountSid` and `Sid` to identify the account and signing key; both identifiers must match their documented SID formats.
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::signing_keys::FetchSigningKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSigningKey, crate::errors::SdkError> {
-        crate::methods::signing_keys::fetch_signing_keys(&self.config, account_sid, sid, options)
+        crate::methods::signing_keys::fetch_signing_keys(&self.config, params, options)
     }
     /// Updates the friendly name of a signing key. Supply `FriendlyName` to change the name; omit it if you do not want to update that field.
     pub fn update(
         &self,
-        account_sid: String,
-        sid: String,
-        friendly_name: Option<String>,
+        params: crate::methods::signing_keys::UpdateSigningKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSigningKey, crate::errors::SdkError> {
-        crate::methods::signing_keys::update_signing_keys(
-            &self.config,
-            account_sid,
-            sid,
-            friendly_name,
-            options,
-        )
+        crate::methods::signing_keys::update_signing_keys(&self.config, params, options)
     }
     /// Deletes a signing key from an account. Identify the account and signing key with their SIDs, using the documented prefixes and 32-character hexadecimal suffixes.
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::signing_keys::DeleteSigningKeysParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::signing_keys::delete_signing_keys(&self.config, account_sid, sid, options)
+        crate::methods::signing_keys::delete_signing_keys(&self.config, params, options)
     }
 }
 
@@ -1935,11 +1703,10 @@ impl NotificationsNamespace {
     /// Fetch a notification belonging to the account used to make the request
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::notifications::FetchNotificationsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountNotificationInstance, crate::errors::SdkError> {
-        crate::methods::notifications::fetch_notifications(&self.config, account_sid, sid, options)
+        crate::methods::notifications::fetch_notifications(&self.config, params, options)
     }
     /// Lists notifications belonging to an account. Filter results by log level or message date, and use the paging parameters to navigate the results. The response contains notification records and page metadata.
     ///
@@ -1971,14 +1738,12 @@ impl OutgoingCallerIdsNamespace {
     /// Fetch an outgoing-caller-id belonging to the account used to make the request
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::outgoing_caller_ids::FetchOutgoingCallerIdsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountOutgoingCallerId, crate::errors::SdkError> {
         crate::methods::outgoing_caller_ids::fetch_outgoing_caller_ids(
             &self.config,
-            account_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -1987,16 +1752,12 @@ impl OutgoingCallerIdsNamespace {
     /// Updates the caller-id
     pub fn update(
         &self,
-        account_sid: String,
-        sid: String,
-        friendly_name: Option<String>,
+        params: crate::methods::outgoing_caller_ids::UpdateOutgoingCallerIdsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountOutgoingCallerId, crate::errors::SdkError> {
         crate::methods::outgoing_caller_ids::update_outgoing_caller_ids(
             &self.config,
-            account_sid,
-            sid,
-            friendly_name,
+            params,
             options,
         )
     }
@@ -2005,14 +1766,12 @@ impl OutgoingCallerIdsNamespace {
     /// Delete the caller-id specified from the account
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::outgoing_caller_ids::DeleteOutgoingCallerIdsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::outgoing_caller_ids::delete_outgoing_caller_ids(
             &self.config,
-            account_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -2074,10 +1833,7 @@ impl RecordingsAddOnResultsPayloadsNamespace {
     /// Fetch an instance of a result payload
     pub fn fetch(
         &self,
-        account_sid: String,
-        reference_sid: String,
-        add_on_result_sid: String,
-        sid: String,
+        params: crate::methods::recordings_add_on_results_payloads::FetchRecordingsAddOnResultsPayloadsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         ApiV2010AccountRecordingRecordingAddOnResultRecordingAddOnResultPayload,
@@ -2085,23 +1841,17 @@ impl RecordingsAddOnResultsPayloadsNamespace {
     > {
         crate::methods::recordings_add_on_results_payloads::fetch_recordings_add_on_results_payloads(
             &self.config,
-            account_sid,
-            reference_sid,
-            add_on_result_sid,
-            sid,
+            params,
             options,
         )
     }
     /// Delete a payload from the result along with all associated Data
     pub fn delete(
         &self,
-        account_sid: String,
-        reference_sid: String,
-        add_on_result_sid: String,
-        sid: String,
+        params: crate::methods::recordings_add_on_results_payloads::DeleteRecordingsAddOnResultsPayloadsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::recordings_add_on_results_payloads::delete_recordings_add_on_results_payloads(&self.config, account_sid, reference_sid, add_on_result_sid, sid, options)
+        crate::methods::recordings_add_on_results_payloads::delete_recordings_add_on_results_payloads(&self.config, params, options)
     }
     /// Lists payloads belonging to an AddOnResult for a recording. Use `PageSize` and `PageToken` to control which payloads are returned and to navigate the paginated response.
     ///
@@ -2118,13 +1868,10 @@ impl RecordingsAddOnResultsPayloadsNamespace {
     /// Fetch an instance of a result payload
     pub fn fetch_data(
         &self,
-        account_sid: String,
-        reference_sid: String,
-        add_on_result_sid: String,
-        payload_sid: String,
+        params: crate::methods::recordings_add_on_results_payloads::FetchRecordingsAddOnResultsPayloadsDataParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<(), crate::errors::SdkError> {
-        crate::methods::recordings_add_on_results_payloads::fetch_recordings_add_on_results_payloads_data(&self.config, account_sid, reference_sid, add_on_result_sid, payload_sid, options)
+        crate::methods::recordings_add_on_results_payloads::fetch_recordings_add_on_results_payloads_data(&self.config, params, options)
     }
 }
 
@@ -2147,16 +1894,12 @@ impl RecordingsAddOnResultsNamespace {
     /// Fetch an instance of an AddOnResult
     pub fn fetch(
         &self,
-        account_sid: String,
-        reference_sid: String,
-        sid: String,
+        params: crate::methods::recordings_add_on_results::FetchRecordingsAddOnResultsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountRecordingRecordingAddOnResult, crate::errors::SdkError> {
         crate::methods::recordings_add_on_results::fetch_recordings_add_on_results(
             &self.config,
-            account_sid,
-            reference_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -2165,16 +1908,12 @@ impl RecordingsAddOnResultsNamespace {
     /// Delete a result and purge all associated Payloads
     pub fn delete(
         &self,
-        account_sid: String,
-        reference_sid: String,
-        sid: String,
+        params: crate::methods::recordings_add_on_results::DeleteRecordingsAddOnResultsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::recordings_add_on_results::delete_recordings_add_on_results(
             &self.config,
-            account_sid,
-            reference_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -2212,32 +1951,24 @@ impl RecordingsTranscriptionsNamespace {
     /// Retrieves a transcription created from a recording. Use the account, recording, and transcription SIDs to identify it, then inspect its status and transcription text when available.
     pub fn fetch(
         &self,
-        account_sid: String,
-        recording_sid: String,
-        sid: String,
+        params: crate::methods::recordings_transcriptions::FetchRecordingsTranscriptionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountRecordingRecordingTranscription, crate::errors::SdkError> {
         crate::methods::recordings_transcriptions::fetch_recordings_transcriptions(
             &self.config,
-            account_sid,
-            recording_sid,
-            sid,
+            params,
             options,
         )
     }
     /// Deletes a transcription created from a recording. Identify the transcription using the account, recording, and transcription SIDs.
     pub fn delete(
         &self,
-        account_sid: String,
-        recording_sid: String,
-        sid: String,
+        params: crate::methods::recordings_transcriptions::DeleteRecordingsTranscriptionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::recordings_transcriptions::delete_recordings_transcriptions(
             &self.config,
-            account_sid,
-            recording_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -2279,29 +2010,20 @@ impl RecordingsNamespace {
     /// Fetch an instance of a recording
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
-        include_soft_deleted: Option<bool>,
+        params: crate::methods::recordings::FetchRecordingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountRecording, crate::errors::SdkError> {
-        crate::methods::recordings::fetch_recordings(
-            &self.config,
-            account_sid,
-            sid,
-            include_soft_deleted,
-            options,
-        )
+        crate::methods::recordings::fetch_recordings(&self.config, params, options)
     }
     /// Deletes a recording from an account. Use `AccountSid` and `Sid` to identify the account and recording to remove.
     ///
     /// Delete a recording from your account
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::recordings::DeleteRecordingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::recordings::delete_recordings(&self.config, account_sid, sid, options)
+        crate::methods::recordings::delete_recordings(&self.config, params, options)
     }
     /// Lists recordings belonging to the account identified by `AccountSid`. Filter results by creation date, call, conference, or soft-deletion status, and use `PageSize` and `PageToken` to control pagination.
     ///
@@ -2332,11 +2054,10 @@ impl ShortCodesNamespace {
     /// Fetch an instance of a short code
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::short_codes::FetchShortCodesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountShortCode, crate::errors::SdkError> {
-        crate::methods::short_codes::fetch_short_codes(&self.config, account_sid, sid, options)
+        crate::methods::short_codes::fetch_short_codes(&self.config, params, options)
     }
     /// Updates a short code's configuration for handling incoming SMS messages. Supply any fields you want to change; `SmsMethod` and `SmsFallbackMethod` accept GET or POST, and `ApiVersion` accepts either of the documented API versions.
     ///
@@ -2377,15 +2098,13 @@ impl SipDomainsAuthCallsCredentialListMappingsNamespace {
     /// Create a new credential list mapping resource
     pub fn create(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        credential_list_sid: String,
+        params: crate::methods::sip_domains_auth_calls_credential_list_mappings::CreateSipDomainsAuthCallsCredentialListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         ApiV2010AccountSipSipDomainSipAuthSipAuthCallsSipAuthCallsCredentialListMapping,
         crate::errors::SdkError,
     > {
-        crate::methods::sip_domains_auth_calls_credential_list_mappings::create_sip_domains_auth_calls_credential_list_mappings(&self.config, account_sid, domain_sid, credential_list_sid, options)
+        crate::methods::sip_domains_auth_calls_credential_list_mappings::create_sip_domains_auth_calls_credential_list_mappings(&self.config, params, options)
     }
     /// Lists credential list mappings for calls on a specific SIP domain. Use the account and domain SIDs to select the domain, and use the pagination parameters to retrieve mappings across pages.
     ///
@@ -2398,25 +2117,21 @@ impl SipDomainsAuthCallsCredentialListMappingsNamespace {
     /// Fetch a specific instance of a credential list mapping
     pub fn fetch(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains_auth_calls_credential_list_mappings::FetchSipDomainsAuthCallsCredentialListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         ApiV2010AccountSipSipDomainSipAuthSipAuthCallsSipAuthCallsCredentialListMapping,
         crate::errors::SdkError,
     > {
-        crate::methods::sip_domains_auth_calls_credential_list_mappings::fetch_sip_domains_auth_calls_credential_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+        crate::methods::sip_domains_auth_calls_credential_list_mappings::fetch_sip_domains_auth_calls_credential_list_mappings(&self.config, params, options)
     }
     /// Delete a credential list mapping from the requested domain
     pub fn delete(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains_auth_calls_credential_list_mappings::DeleteSipDomainsAuthCallsCredentialListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::sip_domains_auth_calls_credential_list_mappings::delete_sip_domains_auth_calls_credential_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+        crate::methods::sip_domains_auth_calls_credential_list_mappings::delete_sip_domains_auth_calls_credential_list_mappings(&self.config, params, options)
     }
 }
 
@@ -2437,15 +2152,13 @@ impl SipDomainsAuthCallsIpAccessControlListMappingsNamespace {
     /// Create a new IP Access Control List mapping
     pub fn create(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        ip_access_control_list_sid: String,
+        params: crate::methods::sip_domains_auth_calls_ip_access_control_list_mappings::CreateSipDomainsAuthCallsIpAccessControlListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         ApiV2010AccountSipSipDomainSipAuthSipAuthCallsSipAuthCallsIpAccessControlListMapping,
         crate::errors::SdkError,
     > {
-        crate::methods::sip_domains_auth_calls_ip_access_control_list_mappings::create_sip_domains_auth_calls_ip_access_control_list_mappings(&self.config, account_sid, domain_sid, ip_access_control_list_sid, options)
+        crate::methods::sip_domains_auth_calls_ip_access_control_list_mappings::create_sip_domains_auth_calls_ip_access_control_list_mappings(&self.config, params, options)
     }
     /// Lists IP Access Control List mappings associated with a SIP domain. Use `PageSize`, `Page`, and `PageToken` to control pagination through the results.
     ///
@@ -2458,25 +2171,21 @@ impl SipDomainsAuthCallsIpAccessControlListMappingsNamespace {
     /// Fetch a specific instance of an IP Access Control List mapping
     pub fn fetch(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains_auth_calls_ip_access_control_list_mappings::FetchSipDomainsAuthCallsIpAccessControlListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         ApiV2010AccountSipSipDomainSipAuthSipAuthCallsSipAuthCallsIpAccessControlListMapping,
         crate::errors::SdkError,
     > {
-        crate::methods::sip_domains_auth_calls_ip_access_control_list_mappings::fetch_sip_domains_auth_calls_ip_access_control_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+        crate::methods::sip_domains_auth_calls_ip_access_control_list_mappings::fetch_sip_domains_auth_calls_ip_access_control_list_mappings(&self.config, params, options)
     }
     /// Delete an IP Access Control List mapping from the requested domain
     pub fn delete(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains_auth_calls_ip_access_control_list_mappings::DeleteSipDomainsAuthCallsIpAccessControlListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::sip_domains_auth_calls_ip_access_control_list_mappings::delete_sip_domains_auth_calls_ip_access_control_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+        crate::methods::sip_domains_auth_calls_ip_access_control_list_mappings::delete_sip_domains_auth_calls_ip_access_control_list_mappings(&self.config, params, options)
     }
 }
 
@@ -2495,8 +2204,8 @@ impl SipDomainsAuthRegistrationsCredentialListMappingsNamespace {
     /// Creates a credential list mapping for a SIP domain. Submit the `CredentialListSid` of the credential list to associate with the domain, using form-encoded request data.
     ///
     /// Create a new credential list mapping resource
-    pub fn create(&self, account_sid: String, domain_sid: String, credential_list_sid: String, options: Option<&crate::client::RequestOptions>) -> Result<ApiV2010AccountSipSipDomainSipAuthSipAuthRegistrationsSipAuthRegistrationsCredentialListMapping, crate::errors::SdkError>{
-        crate::methods::sip_domains_auth_registrations_credential_list_mappings::create_sip_domains_auth_registrations_credential_list_mappings(&self.config, account_sid, domain_sid, credential_list_sid, options)
+    pub fn create(&self, params: crate::methods::sip_domains_auth_registrations_credential_list_mappings::CreateSipDomainsAuthRegistrationsCredentialListMappingsParams, options: Option<&crate::client::RequestOptions>) -> Result<ApiV2010AccountSipSipDomainSipAuthSipAuthRegistrationsSipAuthRegistrationsCredentialListMapping, crate::errors::SdkError>{
+        crate::methods::sip_domains_auth_registrations_credential_list_mappings::create_sip_domains_auth_registrations_credential_list_mappings(&self.config, params, options)
     }
     /// Lists credential list mappings associated with a SIP domain. Use `PageSize`, `Page`, and `PageToken` to control pagination through the results.
     ///
@@ -2507,18 +2216,16 @@ impl SipDomainsAuthRegistrationsCredentialListMappingsNamespace {
     /// Retrieves a specific credential list mapping from a SIP domain. Provide the account, domain, and mapping SIDs to identify the mapping to fetch.
     ///
     /// Fetch a specific instance of a credential list mapping
-    pub fn fetch(&self, account_sid: String, domain_sid: String, sid: String, options: Option<&crate::client::RequestOptions>) -> Result<ApiV2010AccountSipSipDomainSipAuthSipAuthRegistrationsSipAuthRegistrationsCredentialListMapping, crate::errors::SdkError>{
-        crate::methods::sip_domains_auth_registrations_credential_list_mappings::fetch_sip_domains_auth_registrations_credential_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+    pub fn fetch(&self, params: crate::methods::sip_domains_auth_registrations_credential_list_mappings::FetchSipDomainsAuthRegistrationsCredentialListMappingsParams, options: Option<&crate::client::RequestOptions>) -> Result<ApiV2010AccountSipSipDomainSipAuthSipAuthRegistrationsSipAuthRegistrationsCredentialListMapping, crate::errors::SdkError>{
+        crate::methods::sip_domains_auth_registrations_credential_list_mappings::fetch_sip_domains_auth_registrations_credential_list_mappings(&self.config, params, options)
     }
     /// Delete a credential list mapping from the requested domain
     pub fn delete(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains_auth_registrations_credential_list_mappings::DeleteSipDomainsAuthRegistrationsCredentialListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::sip_domains_auth_registrations_credential_list_mappings::delete_sip_domains_auth_registrations_credential_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+        crate::methods::sip_domains_auth_registrations_credential_list_mappings::delete_sip_domains_auth_registrations_credential_list_mappings(&self.config, params, options)
     }
 }
 
@@ -2537,12 +2244,10 @@ impl SipDomainsCredentialListMappingsNamespace {
     /// Create a CredentialListMapping resource for an account.
     pub fn create(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        credential_list_sid: String,
+        params: crate::methods::sip_domains_credential_list_mappings::CreateSipDomainsCredentialListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipDomainSipCredentialListMapping, crate::errors::SdkError> {
-        crate::methods::sip_domains_credential_list_mappings::create_sip_domains_credential_list_mappings(&self.config, account_sid, domain_sid, credential_list_sid, options)
+        crate::methods::sip_domains_credential_list_mappings::create_sip_domains_credential_list_mappings(&self.config, params, options)
     }
     /// Lists credential list mappings for a specified SIP domain and account. Use `PageSize` to control the number of resources on a page and `PageToken` to request a page identified by a token from the API. The response includes page metadata and a `credential_list_mappings` array.
     ///
@@ -2555,22 +2260,18 @@ impl SipDomainsCredentialListMappingsNamespace {
     /// Fetch a single CredentialListMapping resource from an account.
     pub fn fetch(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains_credential_list_mappings::FetchSipDomainsCredentialListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipDomainSipCredentialListMapping, crate::errors::SdkError> {
-        crate::methods::sip_domains_credential_list_mappings::fetch_sip_domains_credential_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+        crate::methods::sip_domains_credential_list_mappings::fetch_sip_domains_credential_list_mappings(&self.config, params, options)
     }
     /// Delete a CredentialListMapping resource from an account.
     pub fn delete(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains_credential_list_mappings::DeleteSipDomainsCredentialListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::sip_domains_credential_list_mappings::delete_sip_domains_credential_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+        crate::methods::sip_domains_credential_list_mappings::delete_sip_domains_credential_list_mappings(&self.config, params, options)
     }
 }
 
@@ -2591,38 +2292,32 @@ impl SipDomainsIpAccessControlListMappingsNamespace {
     /// Fetch an IpAccessControlListMapping resource.
     pub fn fetch(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains_ip_access_control_list_mappings::FetchSipDomainsIpAccessControlListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipDomainSipIpAccessControlListMapping, crate::errors::SdkError>
     {
-        crate::methods::sip_domains_ip_access_control_list_mappings::fetch_sip_domains_ip_access_control_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+        crate::methods::sip_domains_ip_access_control_list_mappings::fetch_sip_domains_ip_access_control_list_mappings(&self.config, params, options)
     }
     /// Deletes an IP access control list mapping from a SIP domain. Provide the account, domain, and mapping identifiers to select the mapping to remove. The response has no body.
     ///
     /// Delete an IpAccessControlListMapping resource.
     pub fn delete(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains_ip_access_control_list_mappings::DeleteSipDomainsIpAccessControlListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::sip_domains_ip_access_control_list_mappings::delete_sip_domains_ip_access_control_list_mappings(&self.config, account_sid, domain_sid, sid, options)
+        crate::methods::sip_domains_ip_access_control_list_mappings::delete_sip_domains_ip_access_control_list_mappings(&self.config, params, options)
     }
     /// Creates a mapping between an IP access control list and a SIP domain. Submit `IpAccessControlListSid` to identify the list to associate with the domain. The response includes the created mapping and its identifiers.
     ///
     /// Create a new IpAccessControlListMapping resource.
     pub fn create(
         &self,
-        account_sid: String,
-        domain_sid: String,
-        ip_access_control_list_sid: String,
+        params: crate::methods::sip_domains_ip_access_control_list_mappings::CreateSipDomainsIpAccessControlListMappingsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipDomainSipIpAccessControlListMapping, crate::errors::SdkError>
     {
-        crate::methods::sip_domains_ip_access_control_list_mappings::create_sip_domains_ip_access_control_list_mappings(&self.config, account_sid, domain_sid, ip_access_control_list_sid, options)
+        crate::methods::sip_domains_ip_access_control_list_mappings::create_sip_domains_ip_access_control_list_mappings(&self.config, params, options)
     }
     /// Lists IP access control list mappings for a SIP domain. Use the pagination parameters to control the page size and track the requested page. The response includes mapping resources and pagination metadata.
     ///
@@ -2668,20 +2363,10 @@ impl SipDomainsNamespace {
     /// Retrieve a list of domains belonging to the account used to make the request
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::sip_domains::ListSipDomainsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<crate::methods::sip_domains::ListSipDomainsResponse, crate::errors::SdkError> {
-        crate::methods::sip_domains::list_sip_domains(
-            &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
-            options,
-        )
+        crate::methods::sip_domains::list_sip_domains(&self.config, params, options)
     }
     /// Creates a SIP domain for an account. Supply `DomainName` and optionally configure its voice URLs, SIP registration, security, and emergency calling settings.
     ///
@@ -2698,11 +2383,10 @@ impl SipDomainsNamespace {
     /// Fetch an instance of a Domain
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains::FetchSipDomainsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipDomain, crate::errors::SdkError> {
-        crate::methods::sip_domains::fetch_sip_domains(&self.config, account_sid, sid, options)
+        crate::methods::sip_domains::fetch_sip_domains(&self.config, params, options)
     }
     /// Updates the configuration of a SIP domain. Supply only the attributes you want to change; method fields accept `GET` or `POST`, and URL fields must be valid URIs.
     ///
@@ -2719,11 +2403,10 @@ impl SipDomainsNamespace {
     /// Delete an instance of a Domain
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::sip_domains::DeleteSipDomainsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::sip_domains::delete_sip_domains(&self.config, account_sid, sid, options)
+        crate::methods::sip_domains::delete_sip_domains(&self.config, params, options)
     }
 }
 
@@ -2761,18 +2444,12 @@ impl SipCredentialListsCredentialsNamespace {
     /// Create a new credential resource.
     pub fn create(
         &self,
-        account_sid: String,
-        credential_list_sid: String,
-        username: String,
-        password: String,
+        params: crate::methods::sip_credential_lists_credentials::CreateSipCredentialListsCredentialsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipCredentialListSipCredential, crate::errors::SdkError> {
         crate::methods::sip_credential_lists_credentials::create_sip_credential_lists_credentials(
             &self.config,
-            account_sid,
-            credential_list_sid,
-            username,
-            password,
+            params,
             options,
         )
     }
@@ -2781,16 +2458,12 @@ impl SipCredentialListsCredentialsNamespace {
     /// Fetch a single credential.
     pub fn fetch(
         &self,
-        account_sid: String,
-        credential_list_sid: String,
-        sid: String,
+        params: crate::methods::sip_credential_lists_credentials::FetchSipCredentialListsCredentialsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipCredentialListSipCredential, crate::errors::SdkError> {
         crate::methods::sip_credential_lists_credentials::fetch_sip_credential_lists_credentials(
             &self.config,
-            account_sid,
-            credential_list_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -2799,18 +2472,12 @@ impl SipCredentialListsCredentialsNamespace {
     /// Update a credential resource.
     pub fn update(
         &self,
-        account_sid: String,
-        credential_list_sid: String,
-        sid: String,
-        password: Option<String>,
+        params: crate::methods::sip_credential_lists_credentials::UpdateSipCredentialListsCredentialsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipCredentialListSipCredential, crate::errors::SdkError> {
         crate::methods::sip_credential_lists_credentials::update_sip_credential_lists_credentials(
             &self.config,
-            account_sid,
-            credential_list_sid,
-            sid,
-            password,
+            params,
             options,
         )
     }
@@ -2819,16 +2486,12 @@ impl SipCredentialListsCredentialsNamespace {
     /// Delete a credential resource.
     pub fn delete(
         &self,
-        account_sid: String,
-        credential_list_sid: String,
-        sid: String,
+        params: crate::methods::sip_credential_lists_credentials::DeleteSipCredentialListsCredentialsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::sip_credential_lists_credentials::delete_sip_credential_lists_credentials(
             &self.config,
-            account_sid,
-            credential_list_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -2853,10 +2516,7 @@ impl SipCredentialListsNamespace {
     /// Get All Credential Lists
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::sip_credential_lists::ListSipCredentialListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         crate::methods::sip_credential_lists::ListSipCredentialListsResponse,
@@ -2864,10 +2524,7 @@ impl SipCredentialListsNamespace {
     > {
         crate::methods::sip_credential_lists::list_sip_credential_lists(
             &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
+            params,
             options,
         )
     }
@@ -2876,14 +2533,12 @@ impl SipCredentialListsNamespace {
     /// Create a Credential List
     pub fn create(
         &self,
-        account_sid: String,
-        friendly_name: String,
+        params: crate::methods::sip_credential_lists::CreateSipCredentialListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipCredentialList, crate::errors::SdkError> {
         crate::methods::sip_credential_lists::create_sip_credential_lists(
             &self.config,
-            account_sid,
-            friendly_name,
+            params,
             options,
         )
     }
@@ -2892,14 +2547,12 @@ impl SipCredentialListsNamespace {
     /// Get a Credential List
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::sip_credential_lists::FetchSipCredentialListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipCredentialList, crate::errors::SdkError> {
         crate::methods::sip_credential_lists::fetch_sip_credential_lists(
             &self.config,
-            account_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -2908,16 +2561,12 @@ impl SipCredentialListsNamespace {
     /// Update a Credential List
     pub fn update(
         &self,
-        account_sid: String,
-        sid: String,
-        friendly_name: String,
+        params: crate::methods::sip_credential_lists::UpdateSipCredentialListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipCredentialList, crate::errors::SdkError> {
         crate::methods::sip_credential_lists::update_sip_credential_lists(
             &self.config,
-            account_sid,
-            sid,
-            friendly_name,
+            params,
             options,
         )
     }
@@ -2926,14 +2575,12 @@ impl SipCredentialListsNamespace {
     /// Delete a Credential List
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::sip_credential_lists::DeleteSipCredentialListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::sip_credential_lists::delete_sip_credential_lists(
             &self.config,
-            account_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -2972,12 +2619,10 @@ impl SipIpAccessControlListsIpAddressesNamespace {
     /// Read one IpAddress resource.
     pub fn fetch(
         &self,
-        account_sid: String,
-        ip_access_control_list_sid: String,
-        sid: String,
+        params: crate::methods::sip_ip_access_control_lists_ip_addresses::FetchSipIpAccessControlListsIpAddressesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipIpAccessControlListSipIpAddress, crate::errors::SdkError> {
-        crate::methods::sip_ip_access_control_lists_ip_addresses::fetch_sip_ip_access_control_lists_ip_addresses(&self.config, account_sid, ip_access_control_list_sid, sid, options)
+        crate::methods::sip_ip_access_control_lists_ip_addresses::fetch_sip_ip_access_control_lists_ip_addresses(&self.config, params, options)
     }
     /// Updates an IPv4 address entry in a SIP IP access control list. Use the body fields to change the address, its descriptive name, or its CIDR prefix length.
     ///
@@ -2994,12 +2639,10 @@ impl SipIpAccessControlListsIpAddressesNamespace {
     /// Delete an IpAddress resource.
     pub fn delete(
         &self,
-        account_sid: String,
-        ip_access_control_list_sid: String,
-        sid: String,
+        params: crate::methods::sip_ip_access_control_lists_ip_addresses::DeleteSipIpAccessControlListsIpAddressesParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::sip_ip_access_control_lists_ip_addresses::delete_sip_ip_access_control_lists_ip_addresses(&self.config, account_sid, ip_access_control_list_sid, sid, options)
+        crate::methods::sip_ip_access_control_lists_ip_addresses::delete_sip_ip_access_control_lists_ip_addresses(&self.config, params, options)
     }
 }
 
@@ -3022,10 +2665,7 @@ impl SipIpAccessControlListsNamespace {
     /// Retrieve a list of IpAccessControlLists that belong to the account used to make the request
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::sip_ip_access_control_lists::ListSipIpAccessControlListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<
         crate::methods::sip_ip_access_control_lists::ListSipIpAccessControlListsResponse,
@@ -3033,10 +2673,7 @@ impl SipIpAccessControlListsNamespace {
     > {
         crate::methods::sip_ip_access_control_lists::list_sip_ip_access_control_lists(
             &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
+            params,
             options,
         )
     }
@@ -3045,14 +2682,12 @@ impl SipIpAccessControlListsNamespace {
     /// Create a new IpAccessControlList resource
     pub fn create(
         &self,
-        account_sid: String,
-        friendly_name: String,
+        params: crate::methods::sip_ip_access_control_lists::CreateSipIpAccessControlListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipIpAccessControlList, crate::errors::SdkError> {
         crate::methods::sip_ip_access_control_lists::create_sip_ip_access_control_lists(
             &self.config,
-            account_sid,
-            friendly_name,
+            params,
             options,
         )
     }
@@ -3061,14 +2696,12 @@ impl SipIpAccessControlListsNamespace {
     /// Fetch a specific instance of an IpAccessControlList
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::sip_ip_access_control_lists::FetchSipIpAccessControlListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipIpAccessControlList, crate::errors::SdkError> {
         crate::methods::sip_ip_access_control_lists::fetch_sip_ip_access_control_lists(
             &self.config,
-            account_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -3077,30 +2710,24 @@ impl SipIpAccessControlListsNamespace {
     /// Rename an IpAccessControlList
     pub fn update(
         &self,
-        account_sid: String,
-        sid: String,
-        friendly_name: String,
+        params: crate::methods::sip_ip_access_control_lists::UpdateSipIpAccessControlListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountSipSipIpAccessControlList, crate::errors::SdkError> {
         crate::methods::sip_ip_access_control_lists::update_sip_ip_access_control_lists(
             &self.config,
-            account_sid,
-            sid,
-            friendly_name,
+            params,
             options,
         )
     }
     /// Delete an IpAccessControlList from the requested account
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::sip_ip_access_control_lists::DeleteSipIpAccessControlListsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
         crate::methods::sip_ip_access_control_lists::delete_sip_ip_access_control_lists(
             &self.config,
-            account_sid,
-            sid,
+            params,
             options,
         )
     }
@@ -3140,11 +2767,10 @@ impl TokensNamespace {
     /// Create a new token for ICE servers
     pub fn create(
         &self,
-        account_sid: String,
-        ttl: Option<i64>,
+        params: crate::methods::tokens::CreateTokensParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountToken, crate::errors::SdkError> {
-        crate::methods::tokens::create_tokens(&self.config, account_sid, ttl, options)
+        crate::methods::tokens::create_tokens(&self.config, params, options)
     }
 }
 
@@ -3165,51 +2791,29 @@ impl TranscriptionsNamespace {
     /// Fetch an instance of a Transcription
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::transcriptions::FetchTranscriptionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountTranscription, crate::errors::SdkError> {
-        crate::methods::transcriptions::fetch_transcriptions(
-            &self.config,
-            account_sid,
-            sid,
-            options,
-        )
+        crate::methods::transcriptions::fetch_transcriptions(&self.config, params, options)
     }
     /// Delete a transcription from the account used to make the request
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::transcriptions::DeleteTranscriptionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::transcriptions::delete_transcriptions(
-            &self.config,
-            account_sid,
-            sid,
-            options,
-        )
+        crate::methods::transcriptions::delete_transcriptions(&self.config, params, options)
     }
     /// Lists transcription resources belonging to an account. Use the page parameters to retrieve results in pages, with `PageSize` controlling the number of resources returned per page.
     ///
     /// Retrieve a list of transcriptions belonging to the account used to make the request
     pub fn list(
         &self,
-        account_sid: String,
-        page_size: Option<i64>,
-        page: Option<i64>,
-        page_token: Option<String>,
+        params: crate::methods::transcriptions::ListTranscriptionsParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<crate::methods::transcriptions::ListTranscriptionsResponse, crate::errors::SdkError>
     {
-        crate::methods::transcriptions::list_transcriptions(
-            &self.config,
-            account_sid,
-            page_size,
-            page,
-            page_token,
-            options,
-        )
+        crate::methods::transcriptions::list_transcriptions(&self.config, params, options)
     }
 }
 
@@ -3339,16 +2943,10 @@ impl UsageTriggersNamespace {
     /// Fetch and instance of a usage-trigger
     pub fn fetch(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::usage_triggers::FetchUsageTriggersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<ApiV2010AccountUsageUsageTrigger, crate::errors::SdkError> {
-        crate::methods::usage_triggers::fetch_usage_triggers(
-            &self.config,
-            account_sid,
-            sid,
-            options,
-        )
+        crate::methods::usage_triggers::fetch_usage_triggers(&self.config, params, options)
     }
     /// Updates an existing usage trigger for an account. Supply the trigger fields you want to change, such as `CallbackUrl`, `CallbackMethod`, or `FriendlyName`; the request body is optional. The callback URL is used when the trigger fires.
     ///
@@ -3363,16 +2961,10 @@ impl UsageTriggersNamespace {
     /// Deletes a specific usage trigger from an account. Use the account and trigger SIDs to identify the resource to remove. The deletion response has no content.
     pub fn delete(
         &self,
-        account_sid: String,
-        sid: String,
+        params: crate::methods::usage_triggers::DeleteUsageTriggersParams,
         options: Option<&crate::client::RequestOptions>,
     ) -> Result<serde_json::Value, crate::errors::SdkError> {
-        crate::methods::usage_triggers::delete_usage_triggers(
-            &self.config,
-            account_sid,
-            sid,
-            options,
-        )
+        crate::methods::usage_triggers::delete_usage_triggers(&self.config, params, options)
     }
     /// Creates a usage trigger for an account to monitor a usage category and value. Supply `CallbackUrl`, `TriggerValue`, and `UsageCategory`; choose `TriggerBy` and `Recurring` to configure what the trigger monitors and how often it can fire. The callback method defaults to `POST` when omitted.
     ///

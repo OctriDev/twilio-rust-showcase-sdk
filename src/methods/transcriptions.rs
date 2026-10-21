@@ -72,6 +72,12 @@ impl ListTranscriptionsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchTranscriptionsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a transcription resource belonging to an account. Use the account and transcription SIDs to identify the resource and review its status, transcript text, and associated recording.
 ///
 /// Fetch an instance of a Transcription
@@ -85,10 +91,10 @@ impl ListTranscriptionsResponse {
 ///   Transcription resource to fetch.
 pub fn fetch_transcriptions(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: FetchTranscriptionsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountTranscription, SdkError> {
+    let FetchTranscriptionsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -126,6 +132,12 @@ pub fn fetch_transcriptions(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteTranscriptionsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Delete a transcription from the account used to make the request
 ///
 /// # Arguments
@@ -137,10 +149,10 @@ pub fn fetch_transcriptions(
 ///   Transcription resource to delete.
 pub fn delete_transcriptions(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: DeleteTranscriptionsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteTranscriptionsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -178,6 +190,14 @@ pub fn delete_transcriptions(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListTranscriptionsParams {
+    pub account_sid: String,
+    pub page_size: Option<i64>,
+    pub page: Option<i64>,
+    pub page_token: Option<String>,
+}
+
 /// Lists transcription resources belonging to an account. Use the page parameters to retrieve results in pages, with `PageSize` controlling the number of resources returned per page.
 ///
 /// Retrieve a list of transcriptions belonging to the account used to make the request
@@ -193,12 +213,15 @@ pub fn delete_transcriptions(
 /// * `page_token` - The page token. This is provided by the API.
 pub fn list_transcriptions(
     config: &ClientConfig,
-    account_sid: String,
-    page_size: Option<i64>,
-    page: Option<i64>,
-    page_token: Option<String>,
+    params: ListTranscriptionsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListTranscriptionsResponse, SdkError> {
+    let ListTranscriptionsParams {
+        account_sid,
+        page_size,
+        page,
+        page_token,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

@@ -72,6 +72,12 @@ impl ListQueuesResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchQueuesParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a queue identified by its SID. Use `AccountSid` and `Sid` to identify the account and queue to retrieve.
 ///
 /// Fetch an instance of a queue identified by the QueueSid
@@ -85,10 +91,10 @@ impl ListQueuesResponse {
 ///   resource to fetch
 pub fn fetch_queues(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: FetchQueuesParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountQueue, SdkError> {
+    let FetchQueuesParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -126,6 +132,14 @@ pub fn fetch_queues(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateQueuesParams {
+    pub account_sid: String,
+    pub sid: String,
+    pub friendly_name: Option<String>,
+    pub max_size: Option<i64>,
+}
+
 /// Updates the name or maximum size of a queue. Use `AccountSid` and `Sid` to identify the queue, and supply `FriendlyName`, `MaxSize`, or both to change its settings. The response contains the updated queue object.
 ///
 /// Update the queue with the new parameters
@@ -143,12 +157,15 @@ pub fn fetch_queues(
 ///   default is 1000\. The maximum is 5000.
 pub fn update_queues(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
-    friendly_name: Option<String>,
-    max_size: Option<i64>,
+    params: UpdateQueuesParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountQueue, SdkError> {
+    let UpdateQueuesParams {
+        account_sid,
+        sid,
+        friendly_name,
+        max_size,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -213,6 +230,12 @@ pub fn update_queues(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteQueuesParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Deletes an empty queue from an account. Use `AccountSid` and `Sid` to identify the account and queue; the queue must be empty before you remove it.
 ///
 /// Remove an empty queue
@@ -226,10 +249,10 @@ pub fn update_queues(
 ///   resource to delete
 pub fn delete_queues(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: DeleteQueuesParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteQueuesParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -267,6 +290,14 @@ pub fn delete_queues(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListQueuesParams {
+    pub account_sid: String,
+    pub page_size: Option<i64>,
+    pub page: Option<i64>,
+    pub page_token: Option<String>,
+}
+
 /// Lists queues belonging to an account. Use `PageSize` to control the number of queues per page and `Page` or `PageToken` to navigate the results.
 ///
 /// Retrieve a list of queues belonging to the account used to make the request
@@ -282,12 +313,15 @@ pub fn delete_queues(
 /// * `page_token` - The page token. This is provided by the API.
 pub fn list_queues(
     config: &ClientConfig,
-    account_sid: String,
-    page_size: Option<i64>,
-    page: Option<i64>,
-    page_token: Option<String>,
+    params: ListQueuesParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListQueuesResponse, SdkError> {
+    let ListQueuesParams {
+        account_sid,
+        page_size,
+        page,
+        page_token,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -348,6 +382,13 @@ pub fn list_queues(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateQueuesParams {
+    pub account_sid: String,
+    pub friendly_name: String,
+    pub max_size: Option<i64>,
+}
+
 /// Creates a queue for an account. Supply `FriendlyName` to describe the queue; `MaxSize` controls the number of calls it can hold and defaults to 1000 when omitted. The response contains the created queue and its generated SID.
 ///
 /// Create a queue
@@ -363,11 +404,14 @@ pub fn list_queues(
 ///   default is 1000\. The maximum is 5000.
 pub fn create_queues(
     config: &ClientConfig,
-    account_sid: String,
-    friendly_name: String,
-    max_size: Option<i64>,
+    params: CreateQueuesParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountQueue, SdkError> {
+    let CreateQueuesParams {
+        account_sid,
+        friendly_name,
+        max_size,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

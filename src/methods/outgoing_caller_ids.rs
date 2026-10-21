@@ -72,6 +72,12 @@ impl ListOutgoingCallerIdsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchOutgoingCallerIdsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves an outgoing caller ID belonging to an account. Supply the account SID and outgoing caller ID SID to identify the resource. The response includes the caller ID's phone number, friendly name, and resource metadata.
 ///
 /// Fetch an outgoing-caller-id belonging to the account used to make the request
@@ -85,10 +91,10 @@ impl ListOutgoingCallerIdsResponse {
 ///   OutgoingCallerId resource to fetch.
 pub fn fetch_outgoing_caller_ids(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: FetchOutgoingCallerIdsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountOutgoingCallerId, SdkError> {
+    let FetchOutgoingCallerIdsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -126,6 +132,13 @@ pub fn fetch_outgoing_caller_ids(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateOutgoingCallerIdsParams {
+    pub account_sid: String,
+    pub sid: String,
+    pub friendly_name: Option<String>,
+}
+
 /// Updates the friendly name of an outgoing caller ID resource. Use `AccountSid` and `Sid` to identify the account and caller ID, and supply `FriendlyName` to change its description. The friendly name can contain up to 64 characters.
 ///
 /// Updates the caller-id
@@ -141,11 +154,14 @@ pub fn fetch_outgoing_caller_ids(
 ///   resource. It can be up to 64 characters long.
 pub fn update_outgoing_caller_ids(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
-    friendly_name: Option<String>,
+    params: UpdateOutgoingCallerIdsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountOutgoingCallerId, SdkError> {
+    let UpdateOutgoingCallerIdsParams {
+        account_sid,
+        sid,
+        friendly_name,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -199,6 +215,12 @@ pub fn update_outgoing_caller_ids(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteOutgoingCallerIdsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Deletes an outgoing caller ID resource from an account. Use `AccountSid` and `Sid` to identify the account and the caller ID to remove. The caller ID SID must use the `PN` format.
 ///
 /// Delete the caller-id specified from the account
@@ -212,10 +234,10 @@ pub fn update_outgoing_caller_ids(
 ///   OutgoingCallerId resource to delete.
 pub fn delete_outgoing_caller_ids(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: DeleteOutgoingCallerIdsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteOutgoingCallerIdsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,

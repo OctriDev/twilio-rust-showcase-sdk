@@ -181,6 +181,14 @@ pub fn list_sip_credential_lists_credentials(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateSipCredentialListsCredentialsParams {
+    pub account_sid: String,
+    pub credential_list_sid: String,
+    pub username: String,
+    pub password: String,
+}
+
 /// Creates a SIP credential in the specified credential list. Supply `Username` and `Password`; the username can be up to 32 characters, and the password must meet the documented length and complexity requirements. The response includes the credential identifier and username, but not the password.
 ///
 /// Create a new credential resource.
@@ -199,12 +207,15 @@ pub fn list_sip_credential_lists_credentials(
 ///   least 1 digit, and have mixed case. (eg `IWasAtSignal2018`)
 pub fn create_sip_credential_lists_credentials(
     config: &ClientConfig,
-    account_sid: String,
-    credential_list_sid: String,
-    username: String,
-    password: String,
+    params: CreateSipCredentialListsCredentialsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipCredentialListSipCredential, SdkError> {
+    let CreateSipCredentialListsCredentialsParams {
+        account_sid,
+        credential_list_sid,
+        username,
+        password,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -271,6 +282,13 @@ pub fn create_sip_credential_lists_credentials(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSipCredentialListsCredentialsParams {
+    pub account_sid: String,
+    pub credential_list_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a SIP credential from a specified credential list. Provide the account, credential list, and credential identifiers to select the resource. The response includes the credential's username and resource metadata.
 ///
 /// Fetch a single credential.
@@ -284,11 +302,14 @@ pub fn create_sip_credential_lists_credentials(
 /// * `sid` - The unique id that identifies the resource to fetch.
 pub fn fetch_sip_credential_lists_credentials(
     config: &ClientConfig,
-    account_sid: String,
-    credential_list_sid: String,
-    sid: String,
+    params: FetchSipCredentialListsCredentialsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipCredentialListSipCredential, SdkError> {
+    let FetchSipCredentialListsCredentialsParams {
+        account_sid,
+        credential_list_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -342,6 +363,14 @@ pub fn fetch_sip_credential_lists_credentials(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateSipCredentialListsCredentialsParams {
+    pub account_sid: String,
+    pub credential_list_sid: String,
+    pub sid: String,
+    pub password: Option<String>,
+}
+
 /// Updates the password for a credential in a specified credential list. Provide the account, credential list, and credential identifiers, then send the new password in the request body. The password must be at least 12 characters and contain at least one digit and mixed case.
 ///
 /// Update a credential resource.
@@ -358,12 +387,15 @@ pub fn fetch_sip_credential_lists_credentials(
 ///   least 1 digit, and have mixed case. (eg `IWasAtSignal2018`)
 pub fn update_sip_credential_lists_credentials(
     config: &ClientConfig,
-    account_sid: String,
-    credential_list_sid: String,
-    sid: String,
-    password: Option<String>,
+    params: UpdateSipCredentialListsCredentialsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipCredentialListSipCredential, SdkError> {
+    let UpdateSipCredentialListsCredentialsParams {
+        account_sid,
+        credential_list_sid,
+        sid,
+        password,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -433,6 +465,13 @@ pub fn update_sip_credential_lists_credentials(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSipCredentialListsCredentialsParams {
+    pub account_sid: String,
+    pub credential_list_sid: String,
+    pub sid: String,
+}
+
 /// Deletes a credential from a specified credential list. Provide the account, credential list, and credential identifiers to select the resource to remove. The response confirms deletion and contains no resource representation.
 ///
 /// Delete a credential resource.
@@ -446,11 +485,14 @@ pub fn update_sip_credential_lists_credentials(
 /// * `sid` - The unique id that identifies the resource to delete.
 pub fn delete_sip_credential_lists_credentials(
     config: &ClientConfig,
-    account_sid: String,
-    credential_list_sid: String,
-    sid: String,
+    params: DeleteSipCredentialListsCredentialsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSipCredentialListsCredentialsParams {
+        account_sid,
+        credential_list_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

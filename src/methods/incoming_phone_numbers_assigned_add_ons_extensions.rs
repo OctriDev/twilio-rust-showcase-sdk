@@ -72,6 +72,14 @@ impl ListIncomingPhoneNumbersAssignedAddOnsExtensionsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchIncomingPhoneNumbersAssignedAddOnsExtensionsParams {
+    pub account_sid: String,
+    pub resource_sid: String,
+    pub assigned_add_on_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves an Extension for an assigned Add-on on an incoming phone number. Use the account, phone number, assigned Add-on, and Extension SIDs to identify the resource.
 ///
 /// Fetch an instance of an Extension for the Assigned Add-on.
@@ -87,7 +95,13 @@ impl ListIncomingPhoneNumbersAssignedAddOnsExtensionsResponse {
 ///   Add-on installation.
 /// * `sid` - The Twilio-provided string that uniquely identifies the resource
 ///   to fetch.
-pub fn fetch_incoming_phone_numbers_assigned_add_ons_extensions(config: &ClientConfig, account_sid: String, resource_sid: String, assigned_add_on_sid: String, sid: String, options: Option<&RequestOptions>) -> Result<ApiV2010AccountIncomingPhoneNumberIncomingPhoneNumberAssignedAddOnIncomingPhoneNumberAssignedAddOnExtension, SdkError>{
+pub fn fetch_incoming_phone_numbers_assigned_add_ons_extensions(config: &ClientConfig, params: FetchIncomingPhoneNumbersAssignedAddOnsExtensionsParams, options: Option<&RequestOptions>) -> Result<ApiV2010AccountIncomingPhoneNumberIncomingPhoneNumberAssignedAddOnIncomingPhoneNumberAssignedAddOnExtension, SdkError>{
+    let FetchIncomingPhoneNumbersAssignedAddOnsExtensionsParams {
+        account_sid,
+        resource_sid,
+        assigned_add_on_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

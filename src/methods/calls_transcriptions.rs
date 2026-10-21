@@ -398,6 +398,14 @@ pub fn create_calls_transcriptions(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateCallsTranscriptionsParams {
+    pub account_sid: String,
+    pub call_sid: String,
+    pub sid: String,
+    pub status: RealtimeTranscriptionEnumUpdateStatus,
+}
+
 /// Stops a realtime transcription associated with a call. Identify it by its transcription SID or by the `name` supplied when it was created, and set `Status` to `stopped`. The response contains the transcription object with its updated status.
 ///
 /// Stop a Transcription using either the SID of the Transcription resource or the `name` used when creating the resource
@@ -414,12 +422,15 @@ pub fn create_calls_transcriptions(
 ///   creating the resource
 pub fn update_calls_transcriptions(
     config: &ClientConfig,
-    account_sid: String,
-    call_sid: String,
-    sid: String,
-    status: RealtimeTranscriptionEnumUpdateStatus,
+    params: UpdateCallsTranscriptionsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountCallRealtimeTranscription, SdkError> {
+    let UpdateCallsTranscriptionsParams {
+        account_sid,
+        call_sid,
+        sid,
+        status,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

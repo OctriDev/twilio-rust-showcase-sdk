@@ -121,6 +121,13 @@ impl std::fmt::Display for UpdateQueuesMembersMethodEnum {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchQueuesMembersParams {
+    pub account_sid: String,
+    pub queue_sid: String,
+    pub call_sid: String,
+}
+
 /// Retrieves a specific member of a queue. Supply the account SID, queue SID, and call SID to identify the queue member.
 ///
 /// Fetch a specific member from the queue
@@ -136,11 +143,14 @@ impl std::fmt::Display for UpdateQueuesMembersMethodEnum {
 ///   resource(s) to fetch.
 pub fn fetch_queues_members(
     config: &ClientConfig,
-    account_sid: String,
-    queue_sid: String,
-    call_sid: String,
+    params: FetchQueuesMembersParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountQueueMember, SdkError> {
+    let FetchQueuesMembersParams {
+        account_sid,
+        queue_sid,
+        call_sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

@@ -8,14 +8,14 @@ use crate::types::ApiV2010AccountCallUserDefinedMessageSubscription;
 use crate::validation::{validate_length, validate_pattern, validate_uri, LengthOpts};
 
 #[derive(Debug, Clone, PartialEq, Default)]
-pub enum CreateCallsUserDefinedMessageSubscriptionsMethodEnum {
+pub enum CreateCallUserDefinedMessageSubscriptionMethodEnum {
     #[default]
     Get,
     Post,
     Unknown(String),
 }
 
-impl CreateCallsUserDefinedMessageSubscriptionsMethodEnum {
+impl CreateCallUserDefinedMessageSubscriptionMethodEnum {
     pub fn as_str(&self) -> &str {
         match self {
             Self::Get => "GET",
@@ -25,7 +25,7 @@ impl CreateCallsUserDefinedMessageSubscriptionsMethodEnum {
     }
 }
 
-impl serde::Serialize for CreateCallsUserDefinedMessageSubscriptionsMethodEnum {
+impl serde::Serialize for CreateCallUserDefinedMessageSubscriptionMethodEnum {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
@@ -34,7 +34,7 @@ impl serde::Serialize for CreateCallsUserDefinedMessageSubscriptionsMethodEnum {
     }
 }
 
-impl<'de> serde::Deserialize<'de> for CreateCallsUserDefinedMessageSubscriptionsMethodEnum {
+impl<'de> serde::Deserialize<'de> for CreateCallUserDefinedMessageSubscriptionMethodEnum {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
@@ -48,19 +48,19 @@ impl<'de> serde::Deserialize<'de> for CreateCallsUserDefinedMessageSubscriptions
     }
 }
 
-impl std::fmt::Display for CreateCallsUserDefinedMessageSubscriptionsMethodEnum {
+impl std::fmt::Display for CreateCallUserDefinedMessageSubscriptionMethodEnum {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(self.as_str())
     }
 }
 
 #[derive(Debug, Clone, Default)]
-pub struct CreateCallsUserDefinedMessageSubscriptionsParams {
+pub struct CreateCallUserDefinedMessageSubscriptionParams {
     pub account_sid: String,
     pub call_sid: String,
     pub callback: String,
     pub idempotency_key: Option<String>,
-    pub method: Option<CreateCallsUserDefinedMessageSubscriptionsMethodEnum>,
+    pub method: Option<CreateCallUserDefinedMessageSubscriptionMethodEnum>,
 }
 
 /// Subscribe to User Defined Messages for a given Call SID.
@@ -82,12 +82,12 @@ pub struct CreateCallsUserDefinedMessageSubscriptionsParams {
 ///   generated.
 /// * `method` - The HTTP method Twilio will use when requesting the above
 ///   `Url`. Either `GET` or `POST`. Default is `POST`.
-pub fn create_calls_user_defined_message_subscriptions(
+pub fn create_call_user_defined_message_subscription(
     config: &ClientConfig,
-    params: CreateCallsUserDefinedMessageSubscriptionsParams,
+    params: CreateCallUserDefinedMessageSubscriptionParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountCallUserDefinedMessageSubscription, SdkError> {
-    let CreateCallsUserDefinedMessageSubscriptionsParams {
+    let CreateCallUserDefinedMessageSubscriptionParams {
         account_sid,
         call_sid,
         callback,
@@ -161,13 +161,20 @@ pub fn create_calls_user_defined_message_subscriptions(
                 body: Some(__body),
                 content_type: "application/x-www-form-urlencoded",
                 decoder: crate::client::ResponseDecoder::Json,
-                operation_id: "create_calls_user_defined_message_subscriptions",
+                operation_id: "create_call_user_defined_message_subscription",
                 options,
                 ..Default::default()
             },
         )?
         .data,
     )
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct DeleteCallsUserDefinedMessageSubscriptionsParams {
+    pub account_sid: String,
+    pub call_sid: String,
+    pub sid: String,
 }
 
 /// Delete a specific User Defined Message Subscription.
@@ -185,11 +192,14 @@ pub fn create_calls_user_defined_message_subscriptions(
 ///   Subscription.
 pub fn delete_calls_user_defined_message_subscriptions(
     config: &ClientConfig,
-    account_sid: String,
-    call_sid: String,
-    sid: String,
+    params: DeleteCallsUserDefinedMessageSubscriptionsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteCallsUserDefinedMessageSubscriptionsParams {
+        account_sid,
+        call_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

@@ -72,6 +72,12 @@ impl ListAuthorizedConnectAppsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchAuthorizedConnectAppsParams {
+    pub account_sid: String,
+    pub connect_app_sid: String,
+}
+
 /// Retrieves an authorized Connect App for an account. Use the account SID and Connect App SID to identify the authorization and review the app details and permissions granted to it.
 ///
 /// Fetch an instance of an authorized-connect-app
@@ -84,10 +90,13 @@ impl ListAuthorizedConnectAppsResponse {
 /// * `connect_app_sid` - The SID of the Connect App to fetch.
 pub fn fetch_authorized_connect_apps(
     config: &ClientConfig,
-    account_sid: String,
-    connect_app_sid: String,
+    params: FetchAuthorizedConnectAppsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountAuthorizedConnectApp, SdkError> {
+    let FetchAuthorizedConnectAppsParams {
+        account_sid,
+        connect_app_sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -125,6 +134,14 @@ pub fn fetch_authorized_connect_apps(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListAuthorizedConnectAppsParams {
+    pub account_sid: String,
+    pub page_size: Option<i64>,
+    pub page: Option<i64>,
+    pub page_token: Option<String>,
+}
+
 /// Lists the Connect Apps authorized for an account. Use the pagination parameters to browse the account's authorized apps and their granted permissions.
 ///
 /// Retrieve a list of authorized-connect-apps belonging to the account used to make the request
@@ -140,12 +157,15 @@ pub fn fetch_authorized_connect_apps(
 /// * `page_token` - The page token. This is provided by the API.
 pub fn list_authorized_connect_apps(
     config: &ClientConfig,
-    account_sid: String,
-    page_size: Option<i64>,
-    page: Option<i64>,
-    page_token: Option<String>,
+    params: ListAuthorizedConnectAppsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListAuthorizedConnectAppsResponse, SdkError> {
+    let ListAuthorizedConnectAppsParams {
+        account_sid,
+        page_size,
+        page,
+        page_token,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
