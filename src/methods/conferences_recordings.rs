@@ -327,6 +327,13 @@ pub fn update_conferences_recordings(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchConferencesRecordingsParams {
+    pub account_sid: String,
+    pub conference_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a specific recording associated with a conference. Provide the account, conference, and recording identifiers to identify the recording resource.
 ///
 /// Fetch an instance of a recording for a call
@@ -342,11 +349,14 @@ pub fn update_conferences_recordings(
 ///   Recording resource to fetch.
 pub fn fetch_conferences_recordings(
     config: &ClientConfig,
-    account_sid: String,
-    conference_sid: String,
-    sid: String,
+    params: FetchConferencesRecordingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountConferenceConferenceRecording, SdkError> {
+    let FetchConferencesRecordingsParams {
+        account_sid,
+        conference_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -394,6 +404,13 @@ pub fn fetch_conferences_recordings(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteConferencesRecordingsParams {
+    pub account_sid: String,
+    pub conference_sid: String,
+    pub sid: String,
+}
+
 /// Deletes a recording associated with a conference from the account. Provide the account, conference, and recording identifiers to specify the resource to remove.
 ///
 /// Delete a recording from your account
@@ -409,11 +426,14 @@ pub fn fetch_conferences_recordings(
 ///   Recording resource to delete.
 pub fn delete_conferences_recordings(
     config: &ClientConfig,
-    account_sid: String,
-    conference_sid: String,
-    sid: String,
+    params: DeleteConferencesRecordingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteConferencesRecordingsParams {
+        account_sid,
+        conference_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

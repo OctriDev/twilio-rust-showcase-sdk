@@ -72,6 +72,11 @@ impl ListAccountsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateAccountsParams {
+    pub friendly_name: Option<String>,
+}
+
 /// Create a new Twilio Subaccount from the account making the request
 ///
 /// # Arguments
@@ -80,9 +85,10 @@ impl ListAccountsResponse {
 ///   defaults to `SubAccount Created at {YYYY-MM-DD HH:MM meridian}`
 pub fn create_accounts(
     config: &ClientConfig,
-    friendly_name: Option<String>,
+    params: CreateAccountsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010Account, SdkError> {
+    let CreateAccountsParams { friendly_name } = params;
     let mut __body_map = serde_json::Map::new();
     if let Some(ref value) = friendly_name {
         __body_map.insert(
@@ -202,6 +208,11 @@ pub fn list_accounts(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchAccountsParams {
+    pub sid: String,
+}
+
 /// Retrieves a specific account by its Account SID. Supply `Sid` as a 34-character account identifier beginning with `AC` followed by 32 hexadecimal characters.
 ///
 /// Fetch the account specified by the provided Account Sid
@@ -211,9 +222,10 @@ pub fn list_accounts(
 /// * `sid` - The Account Sid that uniquely identifies the account to fetch
 pub fn fetch_accounts(
     config: &ClientConfig,
-    sid: String,
+    params: FetchAccountsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010Account, SdkError> {
+    let FetchAccountsParams { sid } = params;
     validate_length(
         "Sid",
         &sid,
@@ -241,6 +253,13 @@ pub fn fetch_accounts(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateAccountsParams {
+    pub sid: String,
+    pub friendly_name: Option<String>,
+    pub status: Option<AccountEnumStatus>,
+}
+
 /// Updates properties of a specific account. Supply `FriendlyName`, `Status`, or both to change the account; a 409 response indicates that another request modified the account concurrently.
 ///
 /// Modify the properties of a given Account
@@ -253,11 +272,14 @@ pub fn fetch_accounts(
 ///   `suspended` or `closed`.
 pub fn update_accounts(
     config: &ClientConfig,
-    sid: String,
-    friendly_name: Option<String>,
-    status: Option<AccountEnumStatus>,
+    params: UpdateAccountsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010Account, SdkError> {
+    let UpdateAccountsParams {
+        sid,
+        friendly_name,
+        status,
+    } = params;
     validate_length(
         "Sid",
         &sid,

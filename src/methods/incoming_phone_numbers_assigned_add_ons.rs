@@ -73,6 +73,13 @@ impl ListIncomingPhoneNumbersAssignedAddOnsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchIncomingPhoneNumbersAssignedAddOnsParams {
+    pub account_sid: String,
+    pub resource_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves an add-on installation assigned to an incoming phone number. Use the account SID, phone number SID, and add-on installation SID to identify the resource.
 ///
 /// Fetch an instance of an Add-on installation currently assigned to this Number.
@@ -88,11 +95,14 @@ impl ListIncomingPhoneNumbersAssignedAddOnsResponse {
 ///   to fetch.
 pub fn fetch_incoming_phone_numbers_assigned_add_ons(
     config: &ClientConfig,
-    account_sid: String,
-    resource_sid: String,
-    sid: String,
+    params: FetchIncomingPhoneNumbersAssignedAddOnsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountIncomingPhoneNumberIncomingPhoneNumberAssignedAddOn, SdkError> {
+    let FetchIncomingPhoneNumbersAssignedAddOnsParams {
+        account_sid,
+        resource_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -142,6 +152,13 @@ pub fn fetch_incoming_phone_numbers_assigned_add_ons(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteIncomingPhoneNumbersAssignedAddOnsParams {
+    pub account_sid: String,
+    pub resource_sid: String,
+    pub sid: String,
+}
+
 /// Remove the assignment of an Add-on installation from the Number specified.
 ///
 /// # Arguments
@@ -155,11 +172,14 @@ pub fn fetch_incoming_phone_numbers_assigned_add_ons(
 ///   to delete.
 pub fn delete_incoming_phone_numbers_assigned_add_ons(
     config: &ClientConfig,
-    account_sid: String,
-    resource_sid: String,
-    sid: String,
+    params: DeleteIncomingPhoneNumbersAssignedAddOnsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteIncomingPhoneNumbersAssignedAddOnsParams {
+        account_sid,
+        resource_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -315,6 +335,13 @@ pub fn list_incoming_phone_numbers_assigned_add_ons(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateIncomingPhoneNumbersAssignedAddOnsParams {
+    pub account_sid: String,
+    pub resource_sid: String,
+    pub installed_add_on_sid: String,
+}
+
 /// Assign an Add-on installation to the Number specified.
 ///
 /// # Arguments
@@ -326,11 +353,14 @@ pub fn list_incoming_phone_numbers_assigned_add_ons(
 /// * `installed_add_on_sid` - The SID that identifies the Add-on installation.
 pub fn create_incoming_phone_numbers_assigned_add_ons(
     config: &ClientConfig,
-    account_sid: String,
-    resource_sid: String,
-    installed_add_on_sid: String,
+    params: CreateIncomingPhoneNumbersAssignedAddOnsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountIncomingPhoneNumberIncomingPhoneNumberAssignedAddOn, SdkError> {
+    let CreateIncomingPhoneNumbersAssignedAddOnsParams {
+        account_sid,
+        resource_sid,
+        installed_add_on_sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

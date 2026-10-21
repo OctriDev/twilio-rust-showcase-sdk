@@ -72,6 +72,14 @@ impl ListSipIpAccessControlListsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct ListSipIpAccessControlListsParams {
+    pub account_sid: String,
+    pub page_size: Option<i64>,
+    pub page: Option<i64>,
+    pub page_token: Option<String>,
+}
+
 /// Lists IP access control lists belonging to an account. Use the page parameters to control which results you retrieve and how many lists appear in each page.
 ///
 /// Retrieve a list of IpAccessControlLists that belong to the account used to make the request
@@ -87,12 +95,15 @@ impl ListSipIpAccessControlListsResponse {
 /// * `page_token` - The page token. This is provided by the API.
 pub fn list_sip_ip_access_control_lists(
     config: &ClientConfig,
-    account_sid: String,
-    page_size: Option<i64>,
-    page: Option<i64>,
-    page_token: Option<String>,
+    params: ListSipIpAccessControlListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ListSipIpAccessControlListsResponse, SdkError> {
+    let ListSipIpAccessControlListsParams {
+        account_sid,
+        page_size,
+        page,
+        page_token,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -153,6 +164,12 @@ pub fn list_sip_ip_access_control_lists(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateSipIpAccessControlListsParams {
+    pub account_sid: String,
+    pub friendly_name: String,
+}
+
 /// Creates an IP access control list for an account. Provide a `FriendlyName` to identify the list; the response includes its generated SID and resource URI.
 ///
 /// Create a new IpAccessControlList resource
@@ -166,10 +183,13 @@ pub fn list_sip_ip_access_control_lists(
 ///   IpAccessControlList, up to 255 characters long.
 pub fn create_sip_ip_access_control_lists(
     config: &ClientConfig,
-    account_sid: String,
-    friendly_name: String,
+    params: CreateSipIpAccessControlListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipIpAccessControlList, SdkError> {
+    let CreateSipIpAccessControlListsParams {
+        account_sid,
+        friendly_name,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -211,6 +231,12 @@ pub fn create_sip_ip_access_control_lists(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSipIpAccessControlListsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a specific IP access control list for an account. Use `AccountSid` and `Sid` to identify the account and list; both values must use their resource-specific 34-character identifier format.
 ///
 /// Fetch a specific instance of an IpAccessControlList
@@ -224,10 +250,10 @@ pub fn create_sip_ip_access_control_lists(
 ///   fetch.
 pub fn fetch_sip_ip_access_control_lists(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: FetchSipIpAccessControlListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipIpAccessControlList, SdkError> {
+    let FetchSipIpAccessControlListsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -265,6 +291,13 @@ pub fn fetch_sip_ip_access_control_lists(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct UpdateSipIpAccessControlListsParams {
+    pub account_sid: String,
+    pub sid: String,
+    pub friendly_name: String,
+}
+
 /// Updates the name of an IP access control list associated with an account. Submit `FriendlyName` to set the human-readable name, which can be up to 255 characters. Use the account and list identifiers to select the resource to update.
 ///
 /// Rename an IpAccessControlList
@@ -280,11 +313,14 @@ pub fn fetch_sip_ip_access_control_lists(
 ///   long.
 pub fn update_sip_ip_access_control_lists(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
-    friendly_name: String,
+    params: UpdateSipIpAccessControlListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipIpAccessControlList, SdkError> {
+    let UpdateSipIpAccessControlListsParams {
+        account_sid,
+        sid,
+        friendly_name,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -336,6 +372,12 @@ pub fn update_sip_ip_access_control_lists(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSipIpAccessControlListsParams {
+    pub account_sid: String,
+    pub sid: String,
+}
+
 /// Delete an IpAccessControlList from the requested account
 ///
 /// # Arguments
@@ -347,10 +389,10 @@ pub fn update_sip_ip_access_control_lists(
 ///   delete.
 pub fn delete_sip_ip_access_control_lists(
     config: &ClientConfig,
-    account_sid: String,
-    sid: String,
+    params: DeleteSipIpAccessControlListsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSipIpAccessControlListsParams { account_sid, sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,

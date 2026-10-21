@@ -28,7 +28,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ..Default::default()
     };
     let client = Twilio::new(config);
-    let result = client.addresses.dependent_phone_numbers.list(octridev_twilio::methods::addresses_dependent_phone_numbers::ListAddressesDependentPhoneNumbersParams { account_sid: "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string(), address_sid: "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string(), page_size: None, page: None, page_token: None }, None)?;
+    let result = client.addresses.dependent_phone_numbers.list(octridev_twilio::methods::addresses_dependent_phone_numbers::ListAddressesDependentPhoneNumbersParams { account_sid: "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string(), address_sid: "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string(), ..Default::default() }, None)?;
     println!("{result:#?}");
     Ok(())
 }

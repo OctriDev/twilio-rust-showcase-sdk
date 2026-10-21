@@ -7,6 +7,11 @@ use crate::errors::SdkError;
 use crate::types::ApiV2010AccountBalance;
 use crate::validation::{validate_length, validate_pattern, LengthOpts};
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchBalanceParams {
+    pub account_sid: String,
+}
+
 /// Retrieves the balance for a specified account. Use the account SID to identify the account whose balance and currency you need. Balance changes may not appear immediately, and child accounts do not include balance information.
 ///
 /// Fetch the balance for an Account based on Account Sid. Balance changes may not be reflected immediately. Child accounts do not contain balance information
@@ -16,9 +21,10 @@ use crate::validation::{validate_length, validate_pattern, LengthOpts};
 /// * `account_sid` - The unique SID identifier of the Account.
 pub fn fetch_balance(
     config: &ClientConfig,
-    account_sid: String,
+    params: FetchBalanceParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountBalance, SdkError> {
+    let FetchBalanceParams { account_sid } = params;
     validate_length(
         "AccountSid",
         &account_sid,

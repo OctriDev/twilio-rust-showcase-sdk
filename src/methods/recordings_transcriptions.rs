@@ -72,6 +72,13 @@ impl ListRecordingsTranscriptionsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchRecordingsTranscriptionsParams {
+    pub account_sid: String,
+    pub recording_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a transcription created from a recording. Use the account, recording, and transcription SIDs to identify it, then inspect its status and transcription text when available.
 ///
 /// # Arguments
@@ -86,11 +93,14 @@ impl ListRecordingsTranscriptionsResponse {
 ///   Transcription resource to fetch.
 pub fn fetch_recordings_transcriptions(
     config: &ClientConfig,
-    account_sid: String,
-    recording_sid: String,
-    sid: String,
+    params: FetchRecordingsTranscriptionsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountRecordingRecordingTranscription, SdkError> {
+    let FetchRecordingsTranscriptionsParams {
+        account_sid,
+        recording_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -140,6 +150,13 @@ pub fn fetch_recordings_transcriptions(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteRecordingsTranscriptionsParams {
+    pub account_sid: String,
+    pub recording_sid: String,
+    pub sid: String,
+}
+
 /// Deletes a transcription created from a recording. Identify the transcription using the account, recording, and transcription SIDs.
 ///
 /// # Arguments
@@ -154,11 +171,14 @@ pub fn fetch_recordings_transcriptions(
 ///   Transcription resource to delete.
 pub fn delete_recordings_transcriptions(
     config: &ClientConfig,
-    account_sid: String,
-    recording_sid: String,
-    sid: String,
+    params: DeleteRecordingsTranscriptionsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteRecordingsTranscriptionsParams {
+        account_sid,
+        recording_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

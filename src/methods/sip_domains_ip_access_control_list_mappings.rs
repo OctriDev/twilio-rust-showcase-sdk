@@ -73,6 +73,13 @@ impl ListSipDomainsIpAccessControlListMappingsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSipDomainsIpAccessControlListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves an IP access control list mapping for a SIP domain. Use `AccountSid`, `DomainSid`, and `Sid` to identify the account, SIP domain, and mapping. Each identifier must match the 34-character format for its resource.
 ///
 /// Fetch an IpAccessControlListMapping resource.
@@ -87,11 +94,14 @@ impl ListSipDomainsIpAccessControlListMappingsResponse {
 ///   fetch.
 pub fn fetch_sip_domains_ip_access_control_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: FetchSipDomainsIpAccessControlListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipDomainSipIpAccessControlListMapping, SdkError> {
+    let FetchSipDomainsIpAccessControlListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -141,6 +151,13 @@ pub fn fetch_sip_domains_ip_access_control_list_mappings(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSipDomainsIpAccessControlListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Deletes an IP access control list mapping from a SIP domain. Provide the account, domain, and mapping identifiers to select the mapping to remove. The response has no body.
 ///
 /// Delete an IpAccessControlListMapping resource.
@@ -155,11 +172,14 @@ pub fn fetch_sip_domains_ip_access_control_list_mappings(
 ///   delete.
 pub fn delete_sip_domains_ip_access_control_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: DeleteSipDomainsIpAccessControlListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSipDomainsIpAccessControlListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -207,6 +227,13 @@ pub fn delete_sip_domains_ip_access_control_list_mappings(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateSipDomainsIpAccessControlListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub ip_access_control_list_sid: String,
+}
+
 /// Creates a mapping between an IP access control list and a SIP domain. Submit `IpAccessControlListSid` to identify the list to associate with the domain. The response includes the created mapping and its identifiers.
 ///
 /// Create a new IpAccessControlListMapping resource.
@@ -221,11 +248,14 @@ pub fn delete_sip_domains_ip_access_control_list_mappings(
 ///   to map to the SIP domain.
 pub fn create_sip_domains_ip_access_control_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    ip_access_control_list_sid: String,
+    params: CreateSipDomainsIpAccessControlListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountSipSipDomainSipIpAccessControlListMapping, SdkError> {
+    let CreateSipDomainsIpAccessControlListMappingsParams {
+        account_sid,
+        domain_sid,
+        ip_access_control_list_sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

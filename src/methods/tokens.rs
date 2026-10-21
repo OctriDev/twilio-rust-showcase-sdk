@@ -7,6 +7,12 @@ use crate::errors::{SdkError, SdkNetworkError};
 use crate::types::ApiV2010AccountToken;
 use crate::validation::{validate_length, validate_pattern, LengthOpts};
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateTokensParams {
+    pub account_sid: String,
+    pub ttl: Option<i64>,
+}
+
 /// Creates a token containing temporary credentials and ICE server details for an account. Set `Ttl` to control how long the generated credentials remain valid; it defaults to 86400 seconds when omitted.
 ///
 /// Create a new token for ICE servers
@@ -20,10 +26,10 @@ use crate::validation::{validate_length, validate_pattern, LengthOpts};
 ///   valid. The default value is 86400 (24 hours).
 pub fn create_tokens(
     config: &ClientConfig,
-    account_sid: String,
-    ttl: Option<i64>,
+    params: CreateTokensParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountToken, SdkError> {
+    let CreateTokensParams { account_sid, ttl } = params;
     validate_length(
         "AccountSid",
         &account_sid,

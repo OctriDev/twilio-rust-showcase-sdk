@@ -74,6 +74,13 @@ impl ListSipDomainsAuthCallsIpAccessControlListMappingsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateSipDomainsAuthCallsIpAccessControlListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub ip_access_control_list_sid: String,
+}
+
 /// Creates an IP Access Control List mapping for a SIP domain. Submit the `IpAccessControlListSid` of the IP Access Control List to associate with the domain, using form-encoded request data.
 ///
 /// Create a new IP Access Control List mapping
@@ -89,14 +96,17 @@ impl ListSipDomainsAuthCallsIpAccessControlListMappingsResponse {
 ///   to map to the SIP domain.
 pub fn create_sip_domains_auth_calls_ip_access_control_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    ip_access_control_list_sid: String,
+    params: CreateSipDomainsAuthCallsIpAccessControlListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<
     ApiV2010AccountSipSipDomainSipAuthSipAuthCallsSipAuthCallsIpAccessControlListMapping,
     SdkError,
 > {
+    let CreateSipDomainsAuthCallsIpAccessControlListMappingsParams {
+        account_sid,
+        domain_sid,
+        ip_access_control_list_sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -253,6 +263,13 @@ pub fn list_sip_domains_auth_calls_ip_access_control_list_mappings(
     Ok(sdk_request::<ListSipDomainsAuthCallsIpAccessControlListMappingsResponse>("GET", &format!("/2010-04-01/Accounts/{}/SIP/Domains/{}/Auth/Calls/IpAccessControlListMappings.json", crate::client::encode_path_segment(&account_sid), crate::client::encode_path_segment(&domain_sid)), config, RequestOpts { query: &__query, decoder: crate::client::ResponseDecoder::Json, operation_id: "list_sip_domains_auth_calls_ip_access_control_list_mappings", options, ..Default::default() })?.data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSipDomainsAuthCallsIpAccessControlListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a specific IP Access Control List mapping from a SIP domain. Provide the account, domain, and mapping SIDs to identify the mapping to fetch.
 ///
 /// Fetch a specific instance of an IP Access Control List mapping
@@ -268,14 +285,17 @@ pub fn list_sip_domains_auth_calls_ip_access_control_list_mappings(
 ///   IpAccessControlListMapping resource to fetch.
 pub fn fetch_sip_domains_auth_calls_ip_access_control_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: FetchSipDomainsAuthCallsIpAccessControlListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<
     ApiV2010AccountSipSipDomainSipAuthSipAuthCallsSipAuthCallsIpAccessControlListMapping,
     SdkError,
 > {
+    let FetchSipDomainsAuthCallsIpAccessControlListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -325,6 +345,13 @@ pub fn fetch_sip_domains_auth_calls_ip_access_control_list_mappings(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSipDomainsAuthCallsIpAccessControlListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Delete an IP Access Control List mapping from the requested domain
 ///
 /// # Arguments
@@ -338,11 +365,14 @@ pub fn fetch_sip_domains_auth_calls_ip_access_control_list_mappings(
 ///   IpAccessControlListMapping resource to delete.
 pub fn delete_sip_domains_auth_calls_ip_access_control_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: DeleteSipDomainsAuthCallsIpAccessControlListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSipDomainsAuthCallsIpAccessControlListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

@@ -74,6 +74,13 @@ impl ListMessagesMediaResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteMessagesMediaParams {
+    pub account_sid: String,
+    pub message_sid: String,
+    pub sid: String,
+}
+
 /// Deletes a specific media resource associated with a message. Supply the account SID, message SID, and media SID for the resource you want to remove.
 ///
 /// Delete the Media resource.
@@ -88,11 +95,14 @@ impl ListMessagesMediaResponse {
 /// * `sid` - The unique identifier of the to-be-deleted Media resource.
 pub fn delete_messages_media(
     config: &ClientConfig,
-    account_sid: String,
-    message_sid: String,
-    sid: String,
+    params: DeleteMessagesMediaParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteMessagesMediaParams {
+        account_sid,
+        message_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -140,6 +150,13 @@ pub fn delete_messages_media(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchMessagesMediaParams {
+    pub account_sid: String,
+    pub message_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a specific media resource associated with a message. Supply the account SID, message SID, and media SID to identify the resource.
 ///
 /// Fetch a single Media resource associated with a specific Message resource
@@ -155,11 +172,14 @@ pub fn delete_messages_media(
 ///   resource to fetch.
 pub fn fetch_messages_media(
     config: &ClientConfig,
-    account_sid: String,
-    message_sid: String,
-    sid: String,
+    params: FetchMessagesMediaParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountMessageMedia, SdkError> {
+    let FetchMessagesMediaParams {
+        account_sid,
+        message_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

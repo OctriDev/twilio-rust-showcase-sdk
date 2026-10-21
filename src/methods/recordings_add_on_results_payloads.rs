@@ -73,6 +73,14 @@ impl ListRecordingsAddOnResultsPayloadsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchRecordingsAddOnResultsPayloadsParams {
+    pub account_sid: String,
+    pub reference_sid: String,
+    pub add_on_result_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a payload belonging to an AddOnResult for a recording. Use the account, recording, result, and payload SIDs to identify the payload and inspect its label, MIME type, and related resource URIs.
 ///
 /// Fetch an instance of a result payload
@@ -90,12 +98,15 @@ impl ListRecordingsAddOnResultsPayloadsResponse {
 ///   AddOnResult Payload resource to fetch.
 pub fn fetch_recordings_add_on_results_payloads(
     config: &ClientConfig,
-    account_sid: String,
-    reference_sid: String,
-    add_on_result_sid: String,
-    sid: String,
+    params: FetchRecordingsAddOnResultsPayloadsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountRecordingRecordingAddOnResultRecordingAddOnResultPayload, SdkError> {
+    let FetchRecordingsAddOnResultsPayloadsParams {
+        account_sid,
+        reference_sid,
+        add_on_result_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -155,6 +166,14 @@ pub fn fetch_recordings_add_on_results_payloads(
     )
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteRecordingsAddOnResultsPayloadsParams {
+    pub account_sid: String,
+    pub reference_sid: String,
+    pub add_on_result_sid: String,
+    pub sid: String,
+}
+
 /// Delete a payload from the result along with all associated Data
 ///
 /// # Arguments
@@ -170,12 +189,15 @@ pub fn fetch_recordings_add_on_results_payloads(
 ///   AddOnResult Payload resource to delete.
 pub fn delete_recordings_add_on_results_payloads(
     config: &ClientConfig,
-    account_sid: String,
-    reference_sid: String,
-    add_on_result_sid: String,
-    sid: String,
+    params: DeleteRecordingsAddOnResultsPayloadsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteRecordingsAddOnResultsPayloadsParams {
+        account_sid,
+        reference_sid,
+        add_on_result_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -353,6 +375,14 @@ pub fn list_recordings_add_on_results_payloads(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchRecordingsAddOnResultsPayloadsDataParams {
+    pub account_sid: String,
+    pub reference_sid: String,
+    pub add_on_result_sid: String,
+    pub payload_sid: String,
+}
+
 /// Retrieves the stored data for a payload belonging to an AddOnResult for a recording. Use the account, recording, result, and payload SIDs to identify the data resource; the response provides a redirect to the stored payload data.
 ///
 /// Fetch an instance of a result payload
@@ -370,12 +400,15 @@ pub fn list_recordings_add_on_results_payloads(
 ///   Recording AddOnResult Payload resource to fetch.
 pub fn fetch_recordings_add_on_results_payloads_data(
     config: &ClientConfig,
-    account_sid: String,
-    reference_sid: String,
-    add_on_result_sid: String,
-    payload_sid: String,
+    params: FetchRecordingsAddOnResultsPayloadsDataParams,
     options: Option<&RequestOptions>,
 ) -> Result<(), SdkError> {
+    let FetchRecordingsAddOnResultsPayloadsDataParams {
+        account_sid,
+        reference_sid,
+        add_on_result_sid,
+        payload_sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

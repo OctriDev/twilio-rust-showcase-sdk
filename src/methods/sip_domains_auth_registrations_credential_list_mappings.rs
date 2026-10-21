@@ -72,6 +72,13 @@ impl ListSipDomainsAuthRegistrationsCredentialListMappingsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateSipDomainsAuthRegistrationsCredentialListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub credential_list_sid: String,
+}
+
 /// Creates a credential list mapping for a SIP domain. Submit the `CredentialListSid` of the credential list to associate with the domain, using form-encoded request data.
 ///
 /// Create a new credential list mapping resource
@@ -87,14 +94,17 @@ impl ListSipDomainsAuthRegistrationsCredentialListMappingsResponse {
 ///   the SIP domain.
 pub fn create_sip_domains_auth_registrations_credential_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    credential_list_sid: String,
+    params: CreateSipDomainsAuthRegistrationsCredentialListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<
     ApiV2010AccountSipSipDomainSipAuthSipAuthRegistrationsSipAuthRegistrationsCredentialListMapping,
     SdkError,
 > {
+    let CreateSipDomainsAuthRegistrationsCredentialListMappingsParams {
+        account_sid,
+        domain_sid,
+        credential_list_sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -232,6 +242,13 @@ pub fn list_sip_domains_auth_registrations_credential_list_mappings(
     Ok(sdk_request::<ListSipDomainsAuthRegistrationsCredentialListMappingsResponse>("GET", &format!("/2010-04-01/Accounts/{}/SIP/Domains/{}/Auth/Registrations/CredentialListMappings.json", crate::client::encode_path_segment(&account_sid), crate::client::encode_path_segment(&domain_sid)), config, RequestOpts { query: &__query, decoder: crate::client::ResponseDecoder::Json, operation_id: "list_sip_domains_auth_registrations_credential_list_mappings", options, ..Default::default() })?.data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchSipDomainsAuthRegistrationsCredentialListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a specific credential list mapping from a SIP domain. Provide the account, domain, and mapping SIDs to identify the mapping to fetch.
 ///
 /// Fetch a specific instance of a credential list mapping
@@ -247,14 +264,17 @@ pub fn list_sip_domains_auth_registrations_credential_list_mappings(
 ///   CredentialListMapping resource to fetch.
 pub fn fetch_sip_domains_auth_registrations_credential_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: FetchSipDomainsAuthRegistrationsCredentialListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<
     ApiV2010AccountSipSipDomainSipAuthSipAuthRegistrationsSipAuthRegistrationsCredentialListMapping,
     SdkError,
 > {
+    let FetchSipDomainsAuthRegistrationsCredentialListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -286,6 +306,13 @@ pub fn fetch_sip_domains_auth_registrations_credential_list_mappings(
     Ok(sdk_request::<ApiV2010AccountSipSipDomainSipAuthSipAuthRegistrationsSipAuthRegistrationsCredentialListMapping>("GET", &format!("/2010-04-01/Accounts/{}/SIP/Domains/{}/Auth/Registrations/CredentialListMappings/{}.json", crate::client::encode_path_segment(&account_sid), crate::client::encode_path_segment(&domain_sid), crate::client::encode_path_segment(&sid)), config, RequestOpts { decoder: crate::client::ResponseDecoder::Json, operation_id: "fetch_sip_domains_auth_registrations_credential_list_mappings", options, ..Default::default() })?.data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteSipDomainsAuthRegistrationsCredentialListMappingsParams {
+    pub account_sid: String,
+    pub domain_sid: String,
+    pub sid: String,
+}
+
 /// Delete a credential list mapping from the requested domain
 ///
 /// # Arguments
@@ -299,11 +326,14 @@ pub fn fetch_sip_domains_auth_registrations_credential_list_mappings(
 ///   CredentialListMapping resource to delete.
 pub fn delete_sip_domains_auth_registrations_credential_list_mappings(
     config: &ClientConfig,
-    account_sid: String,
-    domain_sid: String,
-    sid: String,
+    params: DeleteSipDomainsAuthRegistrationsCredentialListMappingsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteSipDomainsAuthRegistrationsCredentialListMappingsParams {
+        account_sid,
+        domain_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

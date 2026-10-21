@@ -7,6 +7,14 @@ use crate::errors::{SdkError, SdkNetworkError};
 use crate::types::ApiV2010AccountCallUserDefinedMessage;
 use crate::validation::{validate_length, validate_pattern, LengthOpts};
 
+#[derive(Debug, Clone, Default)]
+pub struct CreateCallsUserDefinedMessagesParams {
+    pub account_sid: String,
+    pub call_sid: String,
+    pub content: String,
+    pub idempotency_key: Option<String>,
+}
+
 /// Create a new User Defined Message for the given Call SID.
 ///
 /// # Arguments
@@ -24,12 +32,15 @@ use crate::validation::{validate_length, validate_pattern, LengthOpts};
 ///   generated.
 pub fn create_calls_user_defined_messages(
     config: &ClientConfig,
-    account_sid: String,
-    call_sid: String,
-    content: String,
-    idempotency_key: Option<String>,
+    params: CreateCallsUserDefinedMessagesParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountCallUserDefinedMessage, SdkError> {
+    let CreateCallsUserDefinedMessagesParams {
+        account_sid,
+        call_sid,
+        content,
+        idempotency_key,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

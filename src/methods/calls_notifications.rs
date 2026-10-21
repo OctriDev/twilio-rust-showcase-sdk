@@ -76,6 +76,13 @@ impl ListCallsNotificationsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchCallsNotificationsParams {
+    pub account_sid: String,
+    pub call_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves a notification associated with a specific call. Use the account, call, and notification SIDs to identify the resource and inspect its error details, request, and response information.
 ///
 /// # Arguments
@@ -90,11 +97,14 @@ impl ListCallsNotificationsResponse {
 ///   Notification resource to fetch.
 pub fn fetch_calls_notifications(
     config: &ClientConfig,
-    account_sid: String,
-    call_sid: String,
-    sid: String,
+    params: FetchCallsNotificationsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountCallCallNotificationInstance, SdkError> {
+    let FetchCallsNotificationsParams {
+        account_sid,
+        call_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,

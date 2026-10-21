@@ -72,6 +72,13 @@ impl ListRecordingsAddOnResultsResponse {
     }
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct FetchRecordingsAddOnResultsParams {
+    pub account_sid: String,
+    pub reference_sid: String,
+    pub sid: String,
+}
+
 /// Retrieves an AddOnResult belonging to a recording. Use the account, recording, and result SIDs to identify the resource and inspect its status, timestamps, and related resource URIs.
 ///
 /// Fetch an instance of an AddOnResult
@@ -87,11 +94,14 @@ impl ListRecordingsAddOnResultsResponse {
 ///   AddOnResult resource to fetch.
 pub fn fetch_recordings_add_on_results(
     config: &ClientConfig,
-    account_sid: String,
-    reference_sid: String,
-    sid: String,
+    params: FetchRecordingsAddOnResultsParams,
     options: Option<&RequestOptions>,
 ) -> Result<ApiV2010AccountRecordingRecordingAddOnResult, SdkError> {
+    let FetchRecordingsAddOnResultsParams {
+        account_sid,
+        reference_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
@@ -139,6 +149,13 @@ pub fn fetch_recordings_add_on_results(
     .data)
 }
 
+#[derive(Debug, Clone, Default)]
+pub struct DeleteRecordingsAddOnResultsParams {
+    pub account_sid: String,
+    pub reference_sid: String,
+    pub sid: String,
+}
+
 /// Deletes an AddOnResult associated with a recording and purges all payloads belonging to that result. Identify the resource with its account, recording, and result SIDs before deletion.
 ///
 /// Delete a result and purge all associated Payloads
@@ -154,11 +171,14 @@ pub fn fetch_recordings_add_on_results(
 ///   AddOnResult resource to delete.
 pub fn delete_recordings_add_on_results(
     config: &ClientConfig,
-    account_sid: String,
-    reference_sid: String,
-    sid: String,
+    params: DeleteRecordingsAddOnResultsParams,
     options: Option<&RequestOptions>,
 ) -> Result<serde_json::Value, SdkError> {
+    let DeleteRecordingsAddOnResultsParams {
+        account_sid,
+        reference_sid,
+        sid,
+    } = params;
     validate_length(
         "AccountSid",
         &account_sid,
